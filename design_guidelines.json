@@ -1,0 +1,118 @@
+{
+  "theme_strategy": "dark_mode_primary",
+  "general_ui_ux_design_guidelines": [
+    "Embrace negative space. Use Generous Spacing Philosophy with padding values 2-3x larger than typical.",
+    "Never use purely centered, symmetrical layouts for marketing elements; use asymmetry to create visual tension.",
+    "Focus on optical alignment rather than strict geometrical alignment.",
+    "Ensure WCAG AA compliance or APCA standards for contrast; heavily tinted overlays on images must preserve text legibility.",
+    "Add 'data-testid' attributes to all interactive and key informational elements."
+  ],
+  "typography": {
+    "headings": {
+      "font_family": "Clash Display",
+      "import_url": "https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap",
+      "css_class": "font-['Clash_Display',_sans-serif]",
+      "usage_rules": "Use for all H1-H4. Must use tracking-tight or tracking-tighter. H1 maximum text-6xl. Do not use generic fonts like Inter."
+    },
+    "body": {
+      "font_family": "Manrope",
+      "import_url": "https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap",
+      "css_class": "font-['Manrope',_sans-serif]",
+      "usage_rules": "Use for all paragraphs, labels, and small text. leading-relaxed for body."
+    }
+  },
+  "colors": {
+    "background": "#050505",
+    "surface": "#111111",
+    "surface_elevated": "#1A1A1A",
+    "primary": "#FF4B00",
+    "primary_hover": "#E64300",
+    "text_primary": "#F5F5F5",
+    "text_secondary": "#A3A3A3",
+    "border": "rgba(255, 255, 255, 0.08)",
+    "glass_bg": "rgba(17, 17, 17, 0.6)",
+    "css_variables": {
+      "--background": "0 0% 2%",
+      "--foreground": "0 0% 96%",
+      "--card": "0 0% 7%",
+      "--card-foreground": "0 0% 96%",
+      "--primary": "18 100% 50%",
+      "--primary-foreground": "0 0% 100%",
+      "--border": "0 0% 100% / 0.08",
+      "--muted": "0 0% 10%",
+      "--muted-foreground": "0 0% 64%"
+    }
+  },
+  "visual_enhancers": {
+    "glassmorphism": "backdrop-blur-2xl bg-black/60 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]",
+    "glow_effects": "Use subtle drop-shadow-[0_0_15px_rgba(255,75,0,0.3)] for primary active states.",
+    "gradients": "Avoid full-screen gradients. Use localized soft radial gradients (e.g., bg-gradient-radial from-primary/10 to-transparent) behind hero text or key components.",
+    "noise": "Apply a very subtle SVG noise or grain texture overlay fixed to the background to remove digital flatness."
+  },
+  "components": {
+    "buttons": {
+      "primary": "Pill-shaped (rounded-full), bg-primary text-white, hover:bg-primary_hover, transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,75,0,0.4)] active:scale-95.",
+      "secondary": "Pill-shaped, bg-transparent border border-white/20 text-white hover:bg-white/5 active:scale-95."
+    },
+    "cards": {
+      "standard": "rounded-3xl bg-[#111111] border border-white/10 p-8 hover:-translate-y-2 hover:shadow-2xl hover:border-white/20 transition-all duration-300.",
+      "glass": "rounded-3xl backdrop-blur-xl bg-black/40 border border-white/10 p-8."
+    },
+    "navigation": {
+      "style": "Sticky, fixed top-0, w-full, z-50, backdrop-blur-xl bg-black/70 border-b border-white/10 pt-4 pb-4. DO NOT use completely transparent header."
+    }
+  },
+  "grids_layouts": {
+    "bento_grid": "Use grid-cols-1 md:grid-cols-12 gap-6. Mix spans like col-span-8 row-span-2 and col-span-4 row-span-1 to create asymmetrical tension.",
+    "spacing": "Generous spacing. Sections should use py-24 or py-32. Internal padding for cards p-8 or p-10."
+  },
+  "motion": {
+    "framer_motion": "Use for scroll reveals (staggered fade-up), micro-interactions on cards (scale, border-glow).",
+    "scroll": "Implement smooth scrolling using lenis.",
+    "transitions": "Use specific properties: transition: transform 0.3s ease, opacity 0.3s ease. Do not use 'all'."
+  },
+  "accessibility": {
+    "contrast": "Ensure text over images has a gradient overlay (bg-gradient-to-b from-black/80 to-transparent for dark mode).",
+    "test_ids": "All interactive elements MUST include data-testid attribute.",
+    "focus": "focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.unsplash.com/photo-1600497934947-23786a93f382?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MjJ8MHwxfHNlYXJjaHwxfHxjb2xsZWdlJTIwc3R1ZGVudCUyMG1vdG9yY3ljbGV8ZW58MHx8fHwxNzgzNzk3MDg5fDA&ixlib=rb-4.1.0&q=85",
+        "category": "Hero Section / Ride Sharing",
+        "description": "Man in black jacket riding motorcycle during daytime - Gives a premium urban mobility vibe."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1597755269789-89407cf1a199?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTN8MHwxfHNlYXJjaHwyfHxzdHVkZW50JTIwcmlkaW5nJTIwc2Nvb3RlcnxlbnwwfHx8fDE3ODM3OTcwODl8MA&ixlib=rb-4.1.0&q=85",
+        "category": "How It Works / Rent Bike",
+        "description": "Man riding on black motor scooter - Perfect for the daily commute aspect."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1760917094679-d33f2ec13110?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTZ8MHwxfHNlYXJjaHwzfHxjb2xsZWdlJTIwY2FtcHVzJTIwc3Vuc2V0fGVufDB8fHx8MTc4Mzc5NzA4OXww&ixlib=rb-4.1.0&q=85",
+        "category": "Campus Backgrounds / Trust",
+        "description": "Campus buildings surrounded by trees at sunset - Great for 'Student-only' trusted colleges backdrop."
+      }
+    ],
+    "icons": "lucide-react for generic icons. Phosphor Icons (@phosphor-icons/react) for dense dashboard views."
+  },
+  "3d_libraries": {
+    "recommendation": "Use framer-motion for 3D card tilts (e.g. react-parallax-tilt) to add a premium hardware-like feel to the modules without the overhead of full R3F."
+  },
+  "instructions_to_main_agent": [
+    "Use pure HTML + Tailwind for marketing sections to ensure maximum layout freedom.",
+    "Use Shadcn UI primarily for the App Dashboard preview cards and complex interactive forms.",
+    "Implement Lenis smooth scrolling globally.",
+    "Ensure the layout relies heavily on asymmetry and negative space. Do not center everything.",
+    "Add 'data-testid' to all buttons, links, and forms."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Do not use dark colors as gradients. Use solid dark colors with distinct borders.",
+    "Do not center align the app container (.App { text-align: center; } is banned).",
+    "Add micro-animations for hover states, transitions, parallax effects. Static is dead.",
+    "Never use generic AI emojis like 🤖🧠💭💡🔮🎯 for icons.",
+    "Never use placeholder URLs (via.placeholder.com). If an image is missing, find a suitable Unsplash image.",
+    "Prioritize using pre-existing components from src/components/ui.",
+    "Use 'sonner' for toasts."
+  ]
+}
