@@ -43,6 +43,16 @@ import Messages from "@/pages/app/Messages";
 import Notifications from "@/pages/app/Notifications";
 import Profile from "@/pages/app/Profile";
 import Settings from "@/pages/app/Settings";
+import RideHistory from "@/pages/app/RideHistory";
+import SavedBikes from "@/pages/app/SavedBikes";
+import Rewards from "@/pages/app/Rewards";
+import Referral from "@/pages/app/Referral";
+import BookingRequests from "@/pages/app/BookingRequests";
+import AvailabilityCalendar from "@/pages/app/AvailabilityCalendar";
+import GpsTracking from "@/pages/app/GpsTracking";
+import Earnings from "@/pages/app/Earnings";
+import Analytics from "@/pages/app/Analytics";
+import Reviews from "@/pages/app/Reviews";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -111,6 +121,16 @@ function App() {
                 <Route path="/app/notifications" element={<Notifications />} />
                 <Route path="/app/profile" element={<Profile />} />
                 <Route path="/app/settings" element={<Settings />} />
+                <Route path="/app/ride-history" element={<RideHistory />} />
+                <Route path="/app/saved-bikes" element={<SavedBikes />} />
+                <Route path="/app/rewards" element={<Rewards />} />
+                <Route path="/app/referral" element={<Referral />} />
+                <Route path="/app/booking-requests" element={<BookingRequests />} />
+                <Route path="/app/calendar" element={<AvailabilityCalendar />} />
+                <Route path="/app/gps-tracking" element={<GpsTracking />} />
+                <Route path="/app/earnings" element={<Earnings />} />
+                <Route path="/app/analytics" element={<Analytics />} />
+                <Route path="/app/reviews" element={<Reviews />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />

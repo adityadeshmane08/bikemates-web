@@ -129,19 +129,19 @@ export const PRICING = [
 ];
 
 export const USER_DASHBOARD_CARDS = [
-  { icon: "User", label: "Profile" }, { icon: "Wallet", label: "Wallet" },
-  { icon: "CalendarCheck", label: "Bookings" }, { icon: "History", label: "Ride History" },
-  { icon: "Heart", label: "Saved Bikes" }, { icon: "Bell", label: "Notifications" },
-  { icon: "MessageSquare", label: "Messages" }, { icon: "Gift", label: "Rewards" },
-  { icon: "Users", label: "Referral" }, { icon: "Settings", label: "Settings" },
+  { icon: "User", label: "Profile", to: "/app/profile" }, { icon: "Wallet", label: "Wallet", to: "/app/wallet" },
+  { icon: "CalendarCheck", label: "Bookings", to: "/app/bookings" }, { icon: "History", label: "Ride History", to: "/app/ride-history" },
+  { icon: "Heart", label: "Saved Bikes", to: "/app/saved-bikes" }, { icon: "Bell", label: "Notifications", to: "/app/notifications" },
+  { icon: "MessageSquare", label: "Messages", to: "/app/messages" }, { icon: "Gift", label: "Rewards", to: "/app/rewards" },
+  { icon: "Users", label: "Referral", to: "/app/referral" }, { icon: "Settings", label: "Settings", to: "/app/settings" },
 ];
 
 export const OWNER_DASHBOARD_CARDS = [
-  { icon: "PlusCircle", label: "Add Bike" }, { icon: "Bike", label: "Manage Bikes" },
-  { icon: "Inbox", label: "Booking Requests" }, { icon: "Calendar", label: "Calendar" },
-  { icon: "Navigation", label: "GPS Tracking" }, { icon: "TrendingUp", label: "Earnings" },
-  { icon: "Wallet", label: "Wallet" }, { icon: "BarChart3", label: "Analytics" },
-  { icon: "Star", label: "Reviews" },
+  { icon: "PlusCircle", label: "Add Bike", to: "/app/list-bike" }, { icon: "Bike", label: "Manage Bikes", to: "/app/my-bikes" },
+  { icon: "Inbox", label: "Booking Requests", to: "/app/booking-requests" }, { icon: "Calendar", label: "Calendar", to: "/app/calendar" },
+  { icon: "Navigation", label: "GPS Tracking", to: "/app/gps-tracking" }, { icon: "TrendingUp", label: "Earnings", to: "/app/earnings" },
+  { icon: "Wallet", label: "Wallet", to: "/app/wallet" }, { icon: "BarChart3", label: "Analytics", to: "/app/analytics" },
+  { icon: "Star", label: "Reviews", to: "/app/reviews" },
 ];
 
 export const FEATURE_LIST = [
