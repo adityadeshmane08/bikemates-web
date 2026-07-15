@@ -1,81 +1,83 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { useStore } from "@/lib/store";
+import { AppHeader, StatCard } from "@/components/app/ui";
 import { Icon } from "@/components/site/primitives";
-import { USER_DASHBOARD_CARDS, OWNER_DASHBOARD_CARDS } from "@/lib/data";
 
-const Tile = ({ card, onClick }) => (
-  <button
-    onClick={onClick}
-    data-testid={`dash-tile-${card.label.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "")}`}
-    className="group flex flex-col items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-center transition-transform duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-primary/[0.05]"
-  >
-    <Icon name={card.icon} className="h-7 w-7 text-primary transition-transform group-hover:scale-110" />
-    <span className="text-sm font-medium text-white/70">{card.label}</span>
-  </button>
-);
+const EARNINGS = [
+  { m: "Jul", v: 3200 }, { m: "Aug", v: 4100 }, { m: "Sep", v: 5400 }, { m: "Oct", v: 4800 }, { m: "Nov", v: 6600 }, { m: "Dec", v: 7340 },
+];
+
+const QUICK = [
+  { to: "/app/rent-bike", label: "Rent a Bike", icon: "Bike", color: "#3B82F6" },
+  { to: "/app/book-ride", label: "Book a Ride", icon: "MapPinned", color: "#A855F7" },
+  { to: "/app/list-bike", label: "List Bike for Rent", icon: "KeyRound", color: "#FF4B00" },
+  { to: "/app/share-ride", label: "Share a Ride", icon: "Users", color: "#22C55E" },
+];
 
 const Dashboard = () => {
   const { user } = useAuth();
   const store = useStore();
   const nav = useNavigate();
-  const [view, setView] = useState("rider");
   const name = user?.name || "Student";
+  const max = Math.max(...EARNINGS.map((e) => e.v));
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <p className="text-sm text-white/50">Welcome back,</p>
-          <h1 className="text-2xl font-semibold capitalize sm:text-3xl">{name} 👋</h1>
-        </div>
-        <div className="inline-flex rounded-full border border-white/10 bg-surface p-1" data-testid="dashboard-toggle">
-          <button data-testid="dash-view-rider" onClick={() => setView("rider")} className={`rounded-full px-6 py-2 text-sm font-semibold transition-colors ${view === "rider" ? "bg-blue-500/20 text-blue-400" : "text-white/60 hover:text-white"}`}>User</button>
-          <button data-testid="dash-view-owner" onClick={() => setView("owner")} className={`rounded-full px-6 py-2 text-sm font-semibold transition-colors ${view === "owner" ? "bg-primary/20 text-primary" : "text-white/60 hover:text-white"}`}>Owner</button>
-        </div>
+      <AppHeader title={<span className="capitalize">Welcome back, {name} 👋</span>} subtitle="Here's what's happening across your campus mobility."
+        action={<button onClick={() => nav("/app/panels")} data-testid="open-panels" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-white/5"><Icon name="LayoutGrid" className="h-4 w-4" />Quick Panels</button>} />
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard label="Wallet Balance" value={`₹${store.wallet.toLocaleString("en-IN")}`} icon="Wallet" />
+        <StatCard label="Active Bookings" value={store.bookings.length} icon="CalendarCheck" />
+        <StatCard label="Bikes Listed" value={store.myBikes.length} icon="Bike" hint={store.myBikes.length ? "Earning" : undefined} />
+        <StatCard label="Rides Posted" value={store.myRides.length} icon="Route" />
       </div>
 
-      {view === "rider" ? (
-        <div className="rounded-3xl border border-white/10 bg-surface p-6 sm:p-8" data-testid="user-dashboard">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold sm:text-2xl">User Dashboard</h2>
-            <span className="rounded-full bg-blue-500/15 px-4 py-1.5 text-sm font-semibold text-blue-400">Rider</span>
-          </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {USER_DASHBOARD_CARDS.map((c) => <Tile key={c.label} card={c} onClick={() => nav(c.to)} />)}
-          </div>
-        </div>
-      ) : (
-        <div className="rounded-3xl border border-white/10 bg-surface p-6 sm:p-8" data-testid="owner-dashboard">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold sm:text-2xl">Owner Dashboard</h2>
-            <span className="rounded-full bg-primary/15 px-4 py-1.5 text-sm font-semibold text-primary">Earning</span>
-          </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
-            {OWNER_DASHBOARD_CARDS.map((c) => <Tile key={c.label} card={c} onClick={() => nav(c.to)} />)}
-          </div>
-          <button onClick={() => nav("/app/earnings")} data-testid="owner-earnings-box" className="mt-6 block w-full rounded-2xl bg-primary/10 p-6 text-left transition-colors hover:bg-primary/15">
-            <p className="text-sm text-white/60">This month’s earnings</p>
-            <p className="mt-1 text-3xl font-semibold text-primary font-display">₹{(7340).toLocaleString("en-IN")}</p>
+      {/* Quick actions — the 4 core flows */}
+      <h2 className="mt-10 mb-4 text-lg font-semibold">Quick actions</h2>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {QUICK.map((q) => (
+          <button key={q.to} onClick={() => nav(q.to)} data-testid={`quick-${q.label.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "")}`}
+            className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-surface p-5 text-left transition-transform duration-300 hover:-translate-y-1 hover:border-white/20">
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl" style={{ backgroundColor: `${q.color}1f`, color: q.color }}><Icon name={q.icon} className="h-6 w-6" /></span>
+            <div>
+              <p className="text-sm font-semibold">{q.label}</p>
+              <span className="mt-0.5 inline-flex items-center gap-1 text-xs text-white/45 transition-transform group-hover:translate-x-0.5">Open <Icon name="ArrowRight" className="h-3 w-3" /></span>
+            </div>
           </button>
-        </div>
-      )}
-
-      {/* Snapshot stats below the dashboard grid */}
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          { label: "Wallet Balance", value: `₹${store.wallet.toLocaleString("en-IN")}`, icon: "Wallet" },
-          { label: "Active Bookings", value: store.bookings.length, icon: "CalendarCheck" },
-          { label: "Bikes Listed", value: store.myBikes.length, icon: "Bike" },
-          { label: "Rides Posted", value: store.myRides.length, icon: "Route" },
-        ].map((s) => (
-          <div key={s.label} className="rounded-2xl border border-white/10 bg-surface p-5">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/12 text-primary"><Icon name={s.icon} className="h-5 w-5" /></span>
-            <p className="mt-4 text-2xl font-semibold font-display">{s.value}</p>
-            <p className="mt-1 text-xs text-white/50">{s.label}</p>
-          </div>
         ))}
+      </div>
+
+      <div className="mt-10 grid gap-6 lg:grid-cols-3">
+        <div className="rounded-3xl border border-white/10 bg-surface p-8 lg:col-span-2">
+          <h3 className="text-lg font-semibold">Earnings & savings overview</h3>
+          <div className="mt-8 flex h-48 items-end gap-4">
+            {EARNINGS.map((e) => (
+              <div key={e.m} className="flex h-full flex-1 flex-col items-center gap-2">
+                <div className="flex w-full flex-1 items-end">
+                  <div className="w-full rounded-t-lg bg-primary/80 transition-all hover:bg-primary" style={{ height: `${(e.v / max) * 100}%` }} />
+                </div>
+                <span className="text-xs text-white/45">{e.m}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-3xl border border-white/10 bg-surface p-8">
+          <h3 className="text-lg font-semibold">Recent activity</h3>
+          <div className="mt-6 space-y-3">
+            {store.transactions.slice(0, 5).map((t) => (
+              <div key={t.id} className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium">{t.label}</p>
+                  <p className="text-xs text-white/40">{t.date}</p>
+                </div>
+                <span className={`shrink-0 text-sm font-semibold ${t.amount > 0 ? "text-emerald-400" : "text-white/70"}`}>{t.amount > 0 ? "+" : ""}₹{Math.abs(t.amount)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -53,6 +53,7 @@ import GpsTracking from "@/pages/app/GpsTracking";
 import Earnings from "@/pages/app/Earnings";
 import Analytics from "@/pages/app/Analytics";
 import Reviews from "@/pages/app/Reviews";
+import Panels from "@/pages/app/Panels";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -109,6 +110,7 @@ function App() {
 
               <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/app/panels" element={<Panels />} />
                 <Route path="/app/rent-bike" element={<RentBike />} />
                 <Route path="/app/book-ride" element={<BookRide />} />
                 <Route path="/app/list-bike" element={<ListBike />} />

@@ -8,7 +8,10 @@ import { Logo } from "@/components/site/Logo";
 import { Icon } from "@/components/site/primitives";
 
 const NAV = [
-  { section: "Overview", items: [{ to: "/dashboard", label: "Dashboard", icon: "LayoutDashboard" }] },
+  { section: "Overview", items: [
+    { to: "/dashboard", label: "Dashboard", icon: "LayoutDashboard" },
+    { to: "/app/panels", label: "Quick Panels", icon: "LayoutGrid" },
+  ] },
   { section: "Ride & Rent", items: [
     { to: "/app/rent-bike", label: "Rent Bike", icon: "Bike" },
     { to: "/app/book-ride", label: "Book Ride", icon: "MapPinned" },
