@@ -63,8 +63,8 @@ const Dashboard = () => {
             <h3 className="text-lg font-semibold">{tab === "rider" ? "Your spending saved" : "Earnings overview"}</h3>
             <div className="mt-8 flex h-48 items-end gap-4">
               {EARNINGS.map((e) => (
-                <div key={e.m} className="flex flex-1 flex-col items-center gap-2">
-                  <div className="flex w-full items-end justify-center" style={{ height: "100%" }}>
+                <div key={e.m} className="flex h-full flex-1 flex-col items-center gap-2">
+                  <div className="flex w-full flex-1 items-end">
                     <div className="w-full rounded-t-lg bg-primary/80 transition-all hover:bg-primary" style={{ height: `${(e.v / max) * 100}%` }} />
                   </div>
                   <span className="text-xs text-white/45">{e.m}</span>
