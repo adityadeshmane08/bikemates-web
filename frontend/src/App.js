@@ -1,53 +1,88 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
+import { BrowserRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
+import { Toaster } from "sonner";
+import { AuthProvider } from "@/lib/auth";
+import { Navbar } from "@/components/site/Navbar";
+import { Footer } from "@/components/site/Footer";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+import Home from "@/pages/Home";
+import About from "@/pages/About";
+import Features from "@/pages/Features";
+import BikeRental from "@/pages/BikeRental";
+import RideSharing from "@/pages/RideSharing";
+import HowItWorks from "@/pages/HowItWorks";
+import Safety from "@/pages/Safety";
+import Pricing from "@/pages/Pricing";
+import FAQ from "@/pages/FAQ";
+import Blog from "@/pages/Blog";
+import Contact from "@/pages/Contact";
+import Careers from "@/pages/Careers";
+import CampusAmbassador from "@/pages/CampusAmbassador";
+import ReferEarn from "@/pages/ReferEarn";
+import Insurance from "@/pages/Insurance";
+import PartnerColleges from "@/pages/PartnerColleges";
+import Support from "@/pages/Support";
+import PressKit from "@/pages/PressKit";
+import Legal from "@/pages/Legal";
+import NotFound from "@/pages/NotFound";
+import Dashboard from "@/pages/Dashboard";
+import { Login, Signup } from "@/pages/Auth";
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
 };
+
+const SiteLayout = () => (
+  <>
+    <Navbar />
+    <main className="relative z-[2]">
+      <Outlet />
+    </main>
+    <Footer />
+  </>
+);
 
 function App() {
   return (
     <div className="App">
+      <div className="noise-overlay" />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        <AuthProvider>
+          <ScrollToTop />
+          <Toaster theme="dark" position="top-center" richColors />
+          <Routes>
+            <Route element={<SiteLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/bike-rental" element={<BikeRental />} />
+              <Route path="/ride-sharing" element={<RideSharing />} />
+              <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/safety" element={<Safety />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/campus-ambassador" element={<CampusAmbassador />} />
+              <Route path="/refer-earn" element={<ReferEarn />} />
+              <Route path="/insurance" element={<Insurance />} />
+              <Route path="/partner-colleges" element={<PartnerColleges />} />
+              <Route path="/support" element={<Support />} />
+              <Route path="/press-kit" element={<PressKit />} />
+              <Route path="/privacy" element={<Legal type="privacy" />} />
+              <Route path="/terms" element={<Legal type="terms" />} />
+              <Route path="/refund" element={<Legal type="refund" />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );
