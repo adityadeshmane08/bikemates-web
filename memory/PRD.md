@@ -25,20 +25,22 @@ Ride Sharer, Rent Bike, Book Ride.
 - Colleges & investors evaluating trust and scale.
 
 ## What's Been Implemented (Dec 2025)
-- **23 routes**, all rendering: Home, About, Features, Bike Rental, Ride Sharing, How It Works,
-  Safety, Pricing, FAQ, Blog, Contact, Careers, Campus Ambassador, Refer & Earn, Insurance,
-  Partner Colleges, Support, Press Kit, Privacy, Terms, Refund, 404, Login, Signup, Dashboard.
-- Rich homepage: hero + floating cards, live stat counters, colleges marquee, problem/solution,
-  4 module cards, why-choose, how-it-works, safety grid, dashboard previews, business model,
-  future vision, testimonials, FAQ accordion, final CTA.
-- Sticky glass navbar with "More" mega-dropdown; premium footer with newsletter + app download.
-- Mock auth (signup/login → dashboard) with Rider/Owner tabs, earnings chart, quick actions.
-- All forms (contact, careers, ambassador, support, partner, newsletter) show success toasts.
-- SEO title/meta, data-testids on all interactive elements, fully responsive, accessible focus.
+### Phase 1 — Marketing site
+- 23 marketing routes, rich animated homepage, sticky glass navbar + footer.
+
+### Phase 2 — Full functional APP interface (frontend-only, localStorage-backed)
+- **Real logo** wired in (navbar, footer, auth, app sidebar) + favicon/apple-touch/og image (`public/logo.jpg`).
+- **App shell** (`components/app/AppLayout.jsx`): sidebar (Overview / Ride & Rent / Earn / Account), topbar with live wallet balance + avatar, responsive mobile drawer.
+- **Store** (`lib/store.jsx`): localStorage-persisted state, seeded with 6 bikes + 4 rides + wallet + transactions. Actions: addBike, addRide, bookBike, bookRide, topUp, withdraw, reset.
+- **4 core flows**:
+  - Rider → **Rent Bike** (search/filter, detail dialog, plan select, pay → QR + OTP handover, booking recorded, wallet debited).
+  - Rider → **Book Ride** (search, driver profile + route dialog, confirm → seat confirmed, seats decrement, wallet debited).
+  - Owner → **List Bike for Rent** (full form + photo upload preview → appears in My Bikes).
+  - Owner → **List Route / Share Ride** (route/schedule/fare form → appears in My Rides + Book Ride list as "Your ride").
+- **Supporting pages**: Dashboard (stats, quick actions, earnings chart), My Bikes (booking requests accept/reject), My Rides, My Bookings, Wallet (add/withdraw dialogs + transactions), Messages (interactive chat), Notifications, Profile (verification badges), Settings (toggles + reset demo).
 
 ## Testing
-- iteration_1.json: 100% of tested frontend flows pass. Fixed 2 low-priority items
-  (dashboard chart bars, page title) — both verified.
+- iteration_1.json: marketing site 100%. iteration_2.json: app flows 100% — all 4 core flows validated end-to-end, wallet math correct, persistence works.
 
 ## Prioritized Backlog (future)
 - P1: Real backend + MongoDB to persist contact/careers/ambassador submissions & newsletter.
