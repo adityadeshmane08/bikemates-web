@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Bike } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth";
 import { Field } from "@/components/site/form";
+import { Logo } from "@/components/site/Logo";
 import { IMAGES } from "@/lib/data";
 
 const AuthShell = ({ title, sub, children, footer }) => (
@@ -18,10 +18,7 @@ const AuthShell = ({ title, sub, children, footer }) => (
     </div>
     <div className="flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-md">
-        <Link to="/" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary"><Bike className="h-5 w-5 text-white" /></span>
-          <span className="text-lg font-semibold font-display">Bikemates</span>
-        </Link>
+        <Logo className="h-12" />
         <h1 className="mt-10 text-3xl font-semibold">{title}</h1>
         <p className="mt-2 text-white/55">{sub}</p>
         {children}

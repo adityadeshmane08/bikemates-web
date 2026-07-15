@@ -3,8 +3,10 @@ import "@/App.css";
 import { BrowserRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/auth";
+import { StoreProvider } from "@/lib/store";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
+import { AppLayout } from "@/components/app/AppLayout";
 
 import Home from "@/pages/Home";
 import About from "@/pages/About";
@@ -26,8 +28,21 @@ import Support from "@/pages/Support";
 import PressKit from "@/pages/PressKit";
 import Legal from "@/pages/Legal";
 import NotFound from "@/pages/NotFound";
-import Dashboard from "@/pages/Dashboard";
 import { Login, Signup } from "@/pages/Auth";
+
+import Dashboard from "@/pages/Dashboard";
+import RentBike from "@/pages/app/RentBike";
+import BookRide from "@/pages/app/BookRide";
+import ListBike from "@/pages/app/ListBike";
+import ShareRide from "@/pages/app/ShareRide";
+import MyBikes from "@/pages/app/MyBikes";
+import MyRides from "@/pages/app/MyRides";
+import Bookings from "@/pages/app/Bookings";
+import Wallet from "@/pages/app/Wallet";
+import Messages from "@/pages/app/Messages";
+import Notifications from "@/pages/app/Notifications";
+import Profile from "@/pages/app/Profile";
+import Settings from "@/pages/app/Settings";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -51,37 +66,56 @@ function App() {
       <div className="noise-overlay" />
       <BrowserRouter>
         <AuthProvider>
-          <ScrollToTop />
-          <Toaster theme="dark" position="top-center" richColors />
-          <Routes>
-            <Route element={<SiteLayout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/features" element={<Features />} />
-              <Route path="/bike-rental" element={<BikeRental />} />
-              <Route path="/ride-sharing" element={<RideSharing />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/safety" element={<Safety />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/careers" element={<Careers />} />
-              <Route path="/campus-ambassador" element={<CampusAmbassador />} />
-              <Route path="/refer-earn" element={<ReferEarn />} />
-              <Route path="/insurance" element={<Insurance />} />
-              <Route path="/partner-colleges" element={<PartnerColleges />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/press-kit" element={<PressKit />} />
-              <Route path="/privacy" element={<Legal type="privacy" />} />
-              <Route path="/terms" element={<Legal type="terms" />} />
-              <Route path="/refund" element={<Legal type="refund" />} />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <StoreProvider>
+            <ScrollToTop />
+            <Toaster theme="dark" position="top-center" richColors />
+            <Routes>
+              <Route element={<SiteLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/features" element={<Features />} />
+                <Route path="/bike-rental" element={<BikeRental />} />
+                <Route path="/ride-sharing" element={<RideSharing />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/safety" element={<Safety />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/careers" element={<Careers />} />
+                <Route path="/campus-ambassador" element={<CampusAmbassador />} />
+                <Route path="/refer-earn" element={<ReferEarn />} />
+                <Route path="/insurance" element={<Insurance />} />
+                <Route path="/partner-colleges" element={<PartnerColleges />} />
+                <Route path="/support" element={<Support />} />
+                <Route path="/press-kit" element={<PressKit />} />
+                <Route path="/privacy" element={<Legal type="privacy" />} />
+                <Route path="/terms" element={<Legal type="terms" />} />
+                <Route path="/refund" element={<Legal type="refund" />} />
+              </Route>
+
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+
+              <Route element={<AppLayout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/app/rent-bike" element={<RentBike />} />
+                <Route path="/app/book-ride" element={<BookRide />} />
+                <Route path="/app/list-bike" element={<ListBike />} />
+                <Route path="/app/share-ride" element={<ShareRide />} />
+                <Route path="/app/my-bikes" element={<MyBikes />} />
+                <Route path="/app/my-rides" element={<MyRides />} />
+                <Route path="/app/bookings" element={<Bookings />} />
+                <Route path="/app/wallet" element={<Wallet />} />
+                <Route path="/app/messages" element={<Messages />} />
+                <Route path="/app/notifications" element={<Notifications />} />
+                <Route path="/app/profile" element={<Profile />} />
+                <Route path="/app/settings" element={<Settings />} />
+              </Route>
+
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </StoreProvider>
         </AuthProvider>
       </BrowserRouter>
     </div>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Bike, Twitter, Instagram, Linkedin, Youtube, Apple, Play } from "lucide-react";
+import { Twitter, Instagram, Linkedin, Youtube, Apple, Play } from "lucide-react";
 import { toast } from "sonner";
+import { Logo } from "@/components/site/Logo";
 
 const cols = [
   { title: "Platform", links: [["Bike Rental", "/bike-rental"], ["Ride Sharing", "/ride-sharing"], ["Features", "/features"], ["How It Works", "/how-it-works"], ["Pricing", "/pricing"]] },
@@ -23,10 +24,7 @@ export const Footer = () => {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Link to="/" className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary"><Bike className="h-5 w-5 text-white" /></span>
-              <span className="text-lg font-semibold font-display">Bikemates</span>
-            </Link>
+            <Logo className="h-14" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/50">
               India’s first student-only platform for bike rentals and ride sharing. Trusted campus mobility, built for students.
             </p>

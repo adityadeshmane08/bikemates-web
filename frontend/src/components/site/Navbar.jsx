@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Bike, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { NAV_LINKS, MORE_LINKS } from "@/lib/data";
 import { CTAButton } from "@/components/site/primitives";
+import { Logo } from "@/components/site/Logo";
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -24,12 +25,7 @@ export const Navbar = () => {
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${scrolled ? "glass border-b border-white/10" : "bg-transparent"}`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-        <Link to="/" data-testid="nav-logo" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
-            <Bike className="h-5 w-5 text-white" />
-          </span>
-          <span className="text-lg font-semibold tracking-tight font-display">Bikemates</span>
-        </Link>
+        <Logo className="h-10" testid="nav-logo" />
 
         <div className="hidden items-center gap-1 lg:flex">
           {NAV_LINKS.map((l) => (
