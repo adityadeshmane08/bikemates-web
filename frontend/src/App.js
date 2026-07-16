@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/auth";
 import { StoreProvider } from "@/lib/store";
@@ -75,7 +75,7 @@ function App() {
   return (
     <div className="App">
       <div className="noise-overlay" />
-      <BrowserRouter>
+      <HashRouter>
         <AuthProvider>
           <StoreProvider>
             <ScrollToTop />
@@ -139,7 +139,7 @@ function App() {
             </Routes>
           </StoreProvider>
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
