@@ -1,14 +1,16 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request, Response, HTTPException, Header
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
+import asyncio
+import requests
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
-from typing import List
+from typing import List, Optional
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 
 ROOT_DIR = Path(__file__).parent
@@ -65,6 +67,118 @@ async def get_status_checks():
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     
     return status_checks
+
+# ==================== Emergent Google Auth ====================
+EMERGENT_SESSION_URL = "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
+SESSION_DAYS = 7
+
+
+class AuthUser(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    user_id: str
+    email: str
+    name: str
+    picture: Optional[str] = None
+
+
+class SessionRequest(BaseModel):
+    session_id: str
+
+
+async def get_current_user(request: Request, authorization: Optional[str] = Header(default=None)) -> AuthUser:
+    # Prefer httpOnly cookie, fall back to Authorization header
+    token = request.cookies.get("session_token")
+    if not token and authorization and authorization.startswith("Bearer "):
+        token = authorization.split(" ", 1)[1]
+    if not token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    session = await db.user_sessions.find_one({"session_token": token}, {"_id": 0})
+    if not session:
+        raise HTTPException(status_code=401, detail="Invalid session")
+
+    expires_at = session["expires_at"]
+    if isinstance(expires_at, str):
+        expires_at = datetime.fromisoformat(expires_at)
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+    if expires_at < datetime.now(timezone.utc):
+        await db.user_sessions.delete_one({"session_token": token})
+        raise HTTPException(status_code=401, detail="Session expired")
+
+    user = await db.users.find_one({"user_id": session["user_id"]}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+    return AuthUser(**user)
+
+
+@api_router.post("/auth/session")
+async def create_session(body: SessionRequest, response: Response):
+    # Exchange the one-time session_id for user data + session_token (server-side only)
+    def _fetch():
+        return requests.get(EMERGENT_SESSION_URL, headers={"X-Session-ID": body.session_id}, timeout=15)
+
+    try:
+        resp = await asyncio.to_thread(_fetch)
+    except Exception:
+        raise HTTPException(status_code=502, detail="Auth service unavailable")
+
+    if resp.status_code != 200:
+        raise HTTPException(status_code=401, detail="Invalid session")
+
+    data = resp.json()
+    email = data.get("email")
+    if not email:
+        raise HTTPException(status_code=401, detail="Invalid session data")
+
+    now = datetime.now(timezone.utc)
+    existing = await db.users.find_one({"email": email}, {"_id": 0})
+    if existing:
+        user_id = existing["user_id"]
+        await db.users.update_one({"user_id": user_id}, {"$set": {
+            "name": data.get("name", existing.get("name")),
+            "picture": data.get("picture", existing.get("picture")),
+        }})
+    else:
+        user_id = f"user_{uuid.uuid4().hex[:12]}"
+        await db.users.insert_one({
+            "user_id": user_id,
+            "email": email,
+            "name": data.get("name", email.split("@")[0]),
+            "picture": data.get("picture"),
+            "created_at": now.isoformat(),
+        })
+
+    session_token = data.get("session_token") or uuid.uuid4().hex
+    expires_at = now + timedelta(days=SESSION_DAYS)
+    await db.user_sessions.insert_one({
+        "user_id": user_id,
+        "session_token": session_token,
+        "expires_at": expires_at.isoformat(),
+        "created_at": now.isoformat(),
+    })
+
+    response.set_cookie(
+        key="session_token", value=session_token, httponly=True, secure=True,
+        samesite="none", path="/", max_age=SESSION_DAYS * 24 * 60 * 60,
+    )
+
+    user = await db.users.find_one({"user_id": user_id}, {"_id": 0})
+    return AuthUser(**user)
+
+
+@api_router.get("/auth/me", response_model=AuthUser)
+async def auth_me(request: Request, authorization: Optional[str] = Header(default=None)):
+    return await get_current_user(request, authorization)
+
+
+@api_router.post("/auth/logout")
+async def auth_logout(request: Request, response: Response):
+    token = request.cookies.get("session_token")
+    if token:
+        await db.user_sessions.delete_one({"session_token": token})
+    response.delete_cookie("session_token", path="/", samesite="none", secure=True)
+    return {"success": True}
 
 # Include the router in the main app
 app.include_router(api_router)
