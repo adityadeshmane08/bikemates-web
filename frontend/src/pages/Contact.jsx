@@ -5,9 +5,9 @@ import { Field, useForm } from "@/components/site/form";
 const Contact = () => {
   const f = useForm({ name: "", email: "", college: "", subject: "", message: "" }, "Thanks! Our team will get back to you within 24 hours.");
   const info = [
-    { icon: "Mail", label: "Email", value: "hello@bikemates.in" },
-    { icon: "Phone", label: "Phone", value: "+91 80 4718 2200" },
-    { icon: "MapPin", label: "HQ", value: "Koramangala, Bengaluru, KA 560034" },
+    { icon: "Mail", label: "Email", value: "bikemates.in@gmail.com" },
+    { icon: "Phone", label: "Phone", value: "+91 7720067739" },
+    { icon: "MapPin", label: "HQ", value: "Lohegaon - 411047, Pune, Maharashtra" },
   ];
   return (
     <div>
