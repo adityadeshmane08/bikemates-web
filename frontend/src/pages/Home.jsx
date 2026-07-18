@@ -47,12 +47,12 @@ const Home = () => {
             <Reveal delay={0.2}>
               <div className="mt-10 flex items-center gap-4">
                 <div className="flex -space-x-3">
-                  {["A", "R", "P", "K", "I"].map((c, i) => (
+                  {["Y", "A", "S", "H", "R"].map((c, i) => (
                     <span key={i} className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-black bg-surface-elevated text-xs font-semibold text-primary">{c}</span>
                   ))}
                 </div>
                 <div className="text-sm text-white/60">
-                  <span className="font-semibold text-white">48,200+ students</span> already riding smarter
+                  <span className="font-semibold text-white">48,200+ verified users</span> already riding smarter
                 </div>
               </div>
             </Reveal>
@@ -86,7 +86,7 @@ const Home = () => {
             <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity }} className="absolute left-8 bottom-6 glass rounded-2xl px-4 py-3 shadow-2xl">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-primary" />
-                <p className="text-xs font-medium">Verified student ride</p>
+                <p className="text-xs font-medium">Verified user ride</p>
               </div>
             </motion.div>
           </Reveal>
@@ -109,7 +109,7 @@ const Home = () => {
 
       {/* TRUSTED COLLEGES */}
       <section className="px-6 py-16 lg:px-10">
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/40">Trusted by students at 320+ campuses</p>
+        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/40">Trusted by students,verified users at 320+ campuses & cities</p>
         <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
           <div className="flex w-max animate-marquee gap-4">
             {[...COLLEGES, ...COLLEGES].map((c, i) => (
@@ -125,18 +125,18 @@ const Home = () => {
           <div className="grid gap-6 lg:grid-cols-2">
             <Reveal className="rounded-3xl border border-white/10 bg-surface p-10">
               <span className="text-xs font-semibold uppercase tracking-widest text-red-400/80">The Problem</span>
-              <h3 className="mt-4 text-2xl font-semibold sm:text-3xl">Campus commuting is broken.</h3>
+              <h3 className="mt-4 text-2xl font-semibold sm:text-3xl">Daily commuting is broken.</h3>
               <ul className="mt-6 space-y-4 text-white/60">
-                {["Autos and cabs are expensive on a student budget", "Idle bikes sit unused while others struggle to move", "No safe, verified way to share rides with classmates", "Rising fuel costs, traffic and campus pollution"].map((t) => (
+                {["Crowded Buses, Autos and cabs are expensive on a student budget", "Idle bikes sit unused while others struggle to move", "No safe, verified, quick way to share rides with classmates", "Rising fuel costs, traffic and pollution"].map((t) => (
                   <li key={t} className="flex gap-3"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400" />{t}</li>
                 ))}
               </ul>
             </Reveal>
             <Reveal delay={0.1} className="rounded-3xl border border-primary/30 bg-gradient-to-b from-primary/10 to-transparent p-10">
               <span className="text-xs font-semibold uppercase tracking-widest text-primary">The Solution</span>
-              <h3 className="mt-4 text-2xl font-semibold sm:text-3xl">A trusted student mobility network.</h3>
+              <h3 className="mt-4 text-2xl font-semibold sm:text-3xl">BikeMates - A trusted mobility network.</h3>
               <ul className="mt-6 space-y-4 text-white/70">
-                {["Rent bikes from verified students at peer prices", "Earn passive income from your idle bike", "Share rides and split fuel on your daily route", "Safe, GPS-tracked and insured — every single trip"].map((t) => (
+                {["Rent bikes from students & verified users at peer prices", "Earn passive income from your idle bike", "Share rides and split fuel on your daily route", "Safe, GPS-tracked and insured — every single trip"].map((t) => (
                   <li key={t} className="flex gap-3"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{t}</li>
                 ))}
               </ul>
@@ -181,7 +181,7 @@ const Home = () => {
       {/* WHY CHOOSE */}
       <section className="border-y border-white/10 bg-surface/30 px-6 py-24 lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <SectionHeading eyebrow="Why Bikemates" title="Built for students, trusted by campuses." align="center" />
+          <SectionHeading eyebrow="Why Bikemates" title="Built for students & verified user, trusted by campuses." align="center" />
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {WHY.map((w, i) => (
               <Reveal key={w.title} delay={i * 0.06} className="rounded-3xl border border-white/10 bg-surface p-8 transition-transform duration-300 hover:-translate-y-1">
@@ -215,7 +215,7 @@ const Home = () => {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <SectionHeading eyebrow="Safety & Trust" title="Safety is the whole point." subtitle="Every layer of Bikemates is designed to keep students safe and accountable." />
+              <SectionHeading eyebrow="Safety & Trust" title="Safety is the whole point." subtitle="Every layer of Bikemates is designed to keep users & students safe and accountable." />
               <div className="mt-8 space-y-4">
                 {["College Email Verification", "Driving Licence Verification", "KYC Verification", "Secure Authentication"].map((v) => (
                   <div key={v} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-surface px-5 py-4">
@@ -242,7 +242,7 @@ const Home = () => {
       {/* DASHBOARD PREVIEWS */}
       <section className="px-6 py-24 lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <SectionHeading eyebrow="Beautiful by design" title="Dashboards students actually love." subtitle="Manage everything — bookings, earnings, rides and rewards — from one elegant place." align="center" />
+          <SectionHeading eyebrow="Beautiful by design" title="Dashboards everyone actually love." subtitle="Manage everything — bookings, earnings, rides and rewards — from one elegant place." align="center" />
           <div className="mt-14 grid gap-6 lg:grid-cols-2">
             <Reveal className="rounded-3xl border border-white/10 bg-surface p-8">
               <div className="flex items-center justify-between">
@@ -301,7 +301,7 @@ const Home = () => {
             </div>
           </div>
           <div>
-            <SectionHeading eyebrow="Future Vision" title="Where campus mobility goes next." />
+            <SectionHeading eyebrow="Future Vision" title="Where daily mobility goes next." />
             <div className="mt-8 flex flex-wrap gap-3">
               {FUTURE.map((f, i) => (
                 <Reveal key={f} delay={i * 0.03}>
@@ -318,7 +318,7 @@ const Home = () => {
       {/* TESTIMONIALS */}
       <section className="px-6 py-24 lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <SectionHeading eyebrow="Loved on campus" title="Students are moving smarter." align="center" />
+          <SectionHeading eyebrow="Loved on campus" title="Students & verified useres are moving smarter." align="center" />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {TESTIMONIALS.map((t, i) => (
               <Reveal key={t.name} delay={(i % 3) * 0.08} className="rounded-3xl border border-white/10 bg-surface p-8">
