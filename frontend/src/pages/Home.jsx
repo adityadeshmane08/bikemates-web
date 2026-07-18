@@ -23,17 +23,17 @@ const Home = () => {
           <div>
             <Reveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" /> Student-only • 320+ campuses
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" /> Students • Verified Users Only
               </span>
             </Reveal>
             <Reveal delay={0.05}>
               <h1 className="mt-6 text-5xl font-semibold leading-[0.98] tracking-tight sm:text-6xl lg:text-[4.2rem]">
-                Campus Mobility <br /><span className="text-gradient">Made Smarter.</span>
+                India's Next <br /><span className="text-gradient">Mobility Network.</span>
               </h1>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/60">
-                India’s first student-only platform for bike rentals and ride sharing. Rent, share, and earn within a trusted campus community.
+                India’s first student & verified user only platform for bike rentals and ride sharing. Rent, share, and earn within a trusted community.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
