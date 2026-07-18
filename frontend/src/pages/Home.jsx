@@ -23,7 +23,7 @@ const Home = () => {
           <div>
             <Reveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" /> Students • Verified Users Only
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" /> Students | Verified Users Only
               </span>
             </Reveal>
             <Reveal delay={0.05}>
