@@ -69,14 +69,19 @@ export const Footer = () => {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row">
-          <p className="text-xs text-white/40">© 2025 Bikemates Technologies Pvt. Ltd. All rights reserved.</p>
+          <p className="text-xs text-white/40">© 2026 Bikemates India Pvt. Ltd. All rights reserved.</p>
           <div className="flex gap-4">
-            {[Twitter, Instagram, Linkedin, Youtube].map((I, i) => (
-              <a key={i} href="#" data-testid={`social-link-${i}`} className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-primary hover:text-primary">
-                <I className="h-4 w-4" />
-              </a>
-            ))}
-          </div>
+  {[
+    { icon: Twitter, href: "#" },
+    { icon: Instagram, href: "https://www.instagram.com/bikemates.india?igsh=MXBoZGZ6Mmk3Y2Ntbg==" },
+    { icon: Linkedin, href: "#" },
+    { icon: Youtube, href: "#" },
+  ].map(({ icon: I, href }, i) => (
+    <a key={i} href={href} target="_blank" rel="noopener noreferrer" data-testid={`social-link-${i}`} className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-primary hover:text-primary">
+      <I className="h-4 w-4" />
+    </a>
+  ))}
+</div>
         </div>
       </div>
     </footer>
