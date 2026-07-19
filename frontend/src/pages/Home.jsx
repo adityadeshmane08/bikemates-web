@@ -275,9 +275,9 @@ const Home = () => {
       <section className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="Loved on campus" title="Students & verified useres are moving smarter." align="center" />
-          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory -mx-6 px-6 lg:mx-0 lg:px-0">
             {TESTIMONIALS.map((t, i) => (
-              <Reveal key={t.name} delay={(i % 3) * 0.08} className="rounded-3xl border border-white/10 bg-surface p-8">
+              <Reveal key={t.name} delay={(i % 3) * 0.08} className="w-[85%] shrink-0 snap-center rounded-3xl border border-white/10 bg-surface p-8 sm:w-[380px]">
                 <div className="flex gap-1">
                   {Array.from({ length: t.rating }).map((_, j) => <Star key={j} className="h-4 w-4 fill-primary text-primary" />)}
                 </div>
