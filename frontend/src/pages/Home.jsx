@@ -159,7 +159,7 @@ const Home = () => {
               <button
                 key={label}
                 onClick={() => scrollToCard(i)}
-                className={⁠ shrink-0 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors sm:px-5 sm:text-sm ${activeModule === i ? "border-primary bg-primary/15 text-primary" : "border-white/10 bg-white/5 text-white/60 hover:text-white"} ⁠}
+                className={`shrink-0 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors sm:px-5 sm:text-sm ${activeModule === i ? "border-primary bg-primary/15 text-primary" : "border-white/10 bg-white/5 text-white/60 hover:text-white"}`}
               >
                 {label}
               </button>
@@ -173,9 +173,9 @@ const Home = () => {
           >
             {MODULES.map((m, i) => (
               <div key={m.id} className="w-full shrink-0 snap-center px-2">
-                <Link to={m.link} data-testid={⁠`module-card-${m.id}`} className="group block h-full max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8 transition-colors hover:border-white/20">
+                <Link to={m.link} data-testid={`module-card-${m.id}`} className="group block h-full max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8 transition-colors hover:border-white/20">
                   <div className="flex items-center justify-between">
-                    <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: ⁠`${m.accent}22`, color: m.accent }}>{m.tag}</span>
+                    <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: `${m.accent}22`, color: m.accent }}>{m.tag}</span>
                     <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: `${m.accent}18`, color: m.accent }}>
                       <Icon name={m.id === "bike-owner" ? "KeyRound" : m.id === "ride-sharer" ? "Users" : m.id === "rent-bike" ? "Bike" : "MapPinned"} className="h-5 w-5" />
                     </span>
