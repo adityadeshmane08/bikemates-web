@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, Navigation, ShieldCheck, Wallet, MapPin, Zap } from "lucide-react";
@@ -14,6 +14,22 @@ import {
 } from "@/components/ui/accordion";
 
 const Home = () => {
+  const [activeModule, setActiveModule] = useState(0);
+  const scrollRef = useRef(null);
+
+  const scrollToCard = (i) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+    setActiveModule(i);
+  };
+
+  const handleModuleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setActiveModule(Math.round(el.scrollLeft / el.clientWidth));
+  };
+
   return (
     <div className="overflow-hidden">
       {/* HERO */}
@@ -137,13 +153,30 @@ const Home = () => {
       <section id="modules" className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="Four core experiences" title="One platform. Four ways to move." subtitle="Whether you own a bike, share a ride, need wheels, or want a seat — Bikemates has a purpose-built flow for you." align="center" />
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
+
+          <div className="mt-10 flex justify-center gap-2 overflow-x-auto">
+            {["List Bike", "Share Ride", "Rent Bike", "Book Ride"].map((label, i) => (
+              <button
+                key={label}
+                onClick={() => scrollToCard(i)}
+                className={⁠ shrink-0 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors sm:px-5 sm:text-sm ${activeModule === i ? "border-primary bg-primary/15 text-primary" : "border-white/10 bg-white/5 text-white/60 hover:text-white"} ⁠}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div
+            ref={scrollRef}
+            onScroll={handleModuleScroll}
+            className="mt-8 flex snap-x snap-mandatory overflow-x-auto pb-4 -mx-6 px-6 lg:mx-0 lg:px-0"
+          >
             {MODULES.map((m, i) => (
-              <Reveal key={m.id} delay={i * 0.08}>
-                <Link to={m.link} data-testid={`module-card-${m.id}`} className="group block h-full rounded-3xl border border-white/10 bg-surface p-8 transition-transform duration-300 hover:-translate-y-2 hover:border-white/20">
+              <div key={m.id} className="w-full shrink-0 snap-center px-2">
+                <Link to={m.link} data-testid={⁠ module-card-${m.id} ⁠} className="group block h-full max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8 transition-colors hover:border-white/20">
                   <div className="flex items-center justify-between">
-                    <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: `${m.accent}22`, color: m.accent }}>{m.tag}</span>
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: `${m.accent}18`, color: m.accent }}>
+                    <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: ⁠ ${m.accent}22 ⁠, color: m.accent }}>{m.tag}</span>
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: ⁠ ${m.accent}18 ⁠, color: m.accent }}>
                       <Icon name={m.id === "bike-owner" ? "KeyRound" : m.id === "ride-sharer" ? "Users" : m.id === "rent-bike" ? "Bike" : "MapPinned"} className="h-5 w-5" />
                     </span>
                   </div>
@@ -160,7 +193,7 @@ const Home = () => {
                     {m.cta} <Icon name="ArrowRight" className="h-4 w-4" />
                   </span>
                 </Link>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>
