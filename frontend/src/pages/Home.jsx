@@ -173,10 +173,10 @@ const Home = () => {
           >
             {MODULES.map((m, i) => (
               <div key={m.id} className="w-full shrink-0 snap-center px-2">
-                <Link to={m.link} data-testid={⁠ module-card-${m.id} ⁠} className="group block h-full max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8 transition-colors hover:border-white/20">
+                <Link to={m.link} data-testid={⁠`module-card-${m.id}`} className="group block h-full max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8 transition-colors hover:border-white/20">
                   <div className="flex items-center justify-between">
-                    <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: ⁠ ${m.accent}22 ⁠, color: m.accent }}>{m.tag}</span>
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: ⁠ ${m.accent}18 ⁠, color: m.accent }}>
+                    <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: ⁠`${m.accent}22`, color: m.accent }}>{m.tag}</span>
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: `${m.accent}18`, color: m.accent }}>
                       <Icon name={m.id === "bike-owner" ? "KeyRound" : m.id === "ride-sharer" ? "Users" : m.id === "rent-bike" ? "Bike" : "MapPinned"} className="h-5 w-5" />
                     </span>
                   </div>
