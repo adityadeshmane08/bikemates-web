@@ -94,7 +94,7 @@ const Home = () => {
       </section>
 
       {/* LIVE STATISTICS */}
-      <section className="border-y border-white/10 bg-surface/40 px-6 py-16 lg:px-10">
+      <section className="border-y border-white/10 bg-surface/40 px-6 py-10 lg:px-10">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 md:grid-cols-5">
           {STATS.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.05} className="text-center">
@@ -108,7 +108,7 @@ const Home = () => {
       </section>
 
       {/* TRUSTED COLLEGES */}
-      <section className="px-6 py-16 lg:px-10">
+      <section className="px-6 py-10 lg:px-10">
         <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/40">Trusted by students,verified users at 320+ campuses & cities</p>
         <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
           <div className="flex w-max animate-marquee gap-4">
@@ -120,7 +120,7 @@ const Home = () => {
       </section>
 
       {/* PROBLEM & SOLUTION */}
-      <section className="px-6 py-24 lg:px-10">
+      <section className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 lg:grid-cols-2">
             <Reveal className="rounded-3xl border border-white/10 bg-surface p-10">
@@ -146,7 +146,7 @@ const Home = () => {
       </section>
 
       {/* FOUR CORE MODULES */}
-      <section id="modules" className="px-6 py-24 lg:px-10">
+      <section id="modules" className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="Four core experiences" title="One platform. Four ways to move." subtitle="Whether you own a bike, share a ride, need wheels, or want a seat — Bikemates has a purpose-built flow for you." align="center" />
           <div className="mt-14 grid gap-6 md:grid-cols-2">
@@ -179,7 +179,7 @@ const Home = () => {
       </section>
 
       {/* WHY CHOOSE */}
-      <section className="border-y border-white/10 bg-surface/30 px-6 py-24 lg:px-10">
+      <section className="border-y border-white/10 bg-surface/30 px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="Why Bikemates" title="Built for students & verified user, trusted by campuses." align="center" />
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -195,7 +195,7 @@ const Home = () => {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="px-6 py-24 lg:px-10">
+      <section className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="How it works" title="From sign-up to riding in minutes." subtitle="A safe, verified flow that protects everyone in the community." align="center" />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -211,7 +211,7 @@ const Home = () => {
       </section>
 
       {/* SAFETY & VERIFICATION */}
-      <section className="border-y border-white/10 bg-surface/30 px-6 py-24 lg:px-10">
+      <section className="border-y border-white/10 bg-surface/30 px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
@@ -240,7 +240,7 @@ const Home = () => {
       </section>
 
       {/* DASHBOARD PREVIEWS */}
-      <section className="px-6 py-24 lg:px-10">
+      <section className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="Beautiful by design" title="Dashboards everyone actually love." subtitle="Manage everything — bookings, earnings, rides and rewards — from one elegant place." align="center" />
           <div className="mt-14 grid gap-6 lg:grid-cols-2">
@@ -284,7 +284,7 @@ const Home = () => {
       </section>
 
       {/* BUSINESS MODEL & FUTURE */}
-      <section className="border-y border-white/10 bg-surface/30 px-6 py-24 lg:px-10">
+      <section className="border-y border-white/10 bg-surface/30 px-6 py-14 lg:px-10">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading eyebrow="Business Model" title="A sustainable, aligned engine." />
@@ -316,7 +316,7 @@ const Home = () => {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="px-6 py-24 lg:px-10">
+      <section className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="Loved on campus" title="Students & verified useres are moving smarter." align="center" />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -340,7 +340,7 @@ const Home = () => {
       </section>
 
       {/* FAQ */}
-      <section className="border-t border-white/10 px-6 py-24 lg:px-10">
+      <section className="border-t border-white/10 px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-3xl">
           <SectionHeading eyebrow="FAQ" title="Questions, answered." align="center" />
           <Accordion type="single" collapsible className="mt-10" data-testid="home-faq">
@@ -358,7 +358,7 @@ const Home = () => {
       </section>
 
       {/* FINAL CTA */}
-      <section className="px-6 py-24 lg:px-10">
+      <section className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border border-primary/30 bg-gradient-to-br from-primary/15 via-surface to-surface p-12 text-center lg:p-20">
           <Reveal>
             <h2 className="mx-auto max-w-2xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">Ready to move your campus forward?</h2>
