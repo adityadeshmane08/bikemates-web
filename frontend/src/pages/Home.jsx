@@ -44,19 +44,7 @@ const Home = () => {
                 <CTAButton to="/signup" testid="hero-download-app" variant="ghost" icon={false}>Download App</CTAButton>
               </div>
             </Reveal>
-            <Reveal delay={0.2}>
-              <div className="mt-10 flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  {["Y", "A", "S", "H", "R"].map((c, i) => (
-                    <span key={i} className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-black bg-surface-elevated text-xs font-semibold text-primary">{c}</span>
-                  ))}
-                </div>
-                <div className="text-sm text-white/60">
-                  <span className="font-semibold text-white">48,200+ verified users</span> already riding smarter
-                </div>
-              </div>
-            </Reveal>
-          </div>
+             </div>
 
           {/* Hero visual */}
           <Reveal delay={0.15} className="relative">
