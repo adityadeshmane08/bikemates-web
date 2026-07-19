@@ -283,38 +283,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* BUSINESS MODEL & FUTURE */}
-      <section className="border-y border-white/10 bg-surface/30 px-6 py-14 lg:px-10">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2">
-          <div>
-            <SectionHeading eyebrow="Business Model" title="A sustainable, aligned engine." />
-            <div className="mt-8 space-y-3">
-              {BUSINESS_MODEL.map((b, i) => (
-                <Reveal key={b.title} delay={i * 0.05} className="flex gap-4 rounded-2xl border border-white/10 bg-surface p-5">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-sm font-semibold text-primary">{i + 1}</span>
-                  <div>
-                    <h3 className="text-sm font-semibold">{b.title}</h3>
-                    <p className="mt-1 text-sm text-white/55">{b.text}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-          <div>
-            <SectionHeading eyebrow="Future Vision" title="Where daily mobility goes next." />
-            <div className="mt-8 flex flex-wrap gap-3">
-              {FUTURE.map((f, i) => (
-                <Reveal key={f} delay={i * 0.03}>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface px-5 py-3 text-sm text-white/70 transition-colors hover:border-primary/40 hover:text-white">
-                    <Icon name="Sparkles" className="h-4 w-4 text-primary" />{f}
-                  </span>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* TESTIMONIALS */}
       <section className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
