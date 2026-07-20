@@ -154,7 +154,7 @@ const Home = () => {
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="Four core experiences" title="One platform. Four ways to move." subtitle="Whether you own a bike, share a ride, need wheels, or want a seat — Bikemates has a purpose-built flow for you." align="center" />
 
-          <div className="mt-10 flex justify-center gap-2 overflow-x-auto">
+          <div className="mt-10 grid grid-cols-2 gap-2 sm:flex sm:justify-center sm:overflow-x-auto">
             {["List Bike", "Share Ride", "Rent Bike", "Book Ride"].map((label, i) => (
               <button
                 key={label}
@@ -172,7 +172,7 @@ const Home = () => {
             className="mt-8 flex snap-x snap-mandatory overflow-x-auto pb-4 -mx-6 px-6 lg:mx-0 lg:px-0"
           >
             {MODULES.map((m, i) => (
-              <div key={m.id} className="w-full shrink-0 snap-center px-2">
+              <div key={m.id} className="w-full shrink-0 snap-center snap-always px-2">
                 <Link to={m.link} data-testid={`module-card-${m.id}`} className="group block h-full max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8 transition-colors hover:border-white/20">
                   <div className="flex items-center justify-between">
                     <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: `${m.accent}22`, color: m.accent }}>{m.tag}</span>
