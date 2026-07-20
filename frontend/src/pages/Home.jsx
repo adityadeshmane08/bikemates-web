@@ -312,6 +312,7 @@ const Home = () => {
                   ))}
                 </div>
                </div>
+            </div>
             <div className="w-full shrink-0 snap-center snap-always px-2">
               <div className="max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8">
                 <div className="flex items-center justify-between">
