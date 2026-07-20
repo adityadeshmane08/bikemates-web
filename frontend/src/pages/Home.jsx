@@ -128,7 +128,7 @@ const Home = () => {
 
       {/* TRUSTED COLLEGES */}
       <section className="px-6 py-10 lg:px-10">
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/40">Trusted by students,verified users at 320+ campuses & cities</p>
+        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/40">Trusted by students & verified users at 320+ campuses & cities</p>
         <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
           <div className="flex w-max animate-marquee gap-4">
             {[...COLLEGES, ...COLLEGES].map((c, i) => (
@@ -388,7 +388,7 @@ const Home = () => {
         <div className="mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border border-primary/30 bg-gradient-to-br from-primary/15 via-surface to-surface p-12 text-center lg:p-20">
           <Reveal>
             <h2 className="mx-auto max-w-2xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">Ready to move your campus forward?</h2>
-            <p className="mx-auto mt-5 max-w-xl text-white/60">Join 48,200+ verified students already renting, sharing and earning on Bikemates.</p>
+            <p className="mx-auto mt-5 max-w-xl text-white/60">Join Now , 48,200+ students & verified users already renting, sharing and earning on Bikemates.</p>
             <div className="mt-9 flex flex-wrap justify-center gap-3">
               <CTAButton to="/signup" testid="cta-get-started">Get Started Free</CTAButton>
               <CTAButton to="/how-it-works" testid="cta-how-it-works" variant="secondary" icon={false}>See how it works</CTAButton>
