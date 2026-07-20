@@ -347,7 +347,7 @@ const Home = () => {
           <SectionHeading eyebrow="Loved on campus" title="Students & verified useres are moving smarter." align="center" />
           <div className="mt-14 flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory -mx-6 px-6 lg:mx-0 lg:px-0">
             {TESTIMONIALS.map((t, i) => (
-              <Reveal key={t.name} delay={(i % 3) * 0.08} className="w-[85%] shrink-0 snap-center rounded-3xl border border-white/10 bg-surface p-8 sm:w-[380px]">
+              <div key={t.name} className="w-[85%] shrink-0 snap-center rounded-3xl border border-white/10 bg-surface p-8 sm:w-[380px]">
                 <div className="flex gap-1">
                   {Array.from({ length: t.rating }).map((_, j) => <Star key={j} className="h-4 w-4 fill-primary text-primary" />)}
                 </div>
@@ -359,7 +359,7 @@ const Home = () => {
                     <p className="text-xs text-white/45">{t.role}</p>
                   </div>
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>
