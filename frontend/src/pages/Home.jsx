@@ -311,8 +311,7 @@ const Home = () => {
                     </div>
                   ))}
                 </div>
-              </Reveal>
-            </div>
+               </div>
             <div className="w-full shrink-0 snap-center snap-always px-2">
               <div className="max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8">
                 <div className="flex items-center justify-between">
@@ -326,12 +325,11 @@ const Home = () => {
                       <span className="text-[11px] text-white/60">{c.label}</span>
                     </div>
                   ))}
-                </div>
+               </div>
                 <div className="mt-4 rounded-2xl bg-primary/10 p-4">
                   <p className="text-xs text-white/50">This month’s earnings</p>
                   <p className="text-2xl font-semibold text-primary font-display">₹7,340</p>
                 </div>
-              </Reveal>
             </div>
           </div>
 
