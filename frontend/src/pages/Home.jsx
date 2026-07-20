@@ -298,7 +298,7 @@ const Home = () => {
             className="mt-8 flex snap-x snap-mandatory overflow-x-auto pb-4 -mx-6 px-6 lg:mx-0 lg:px-0"
           >
             <div className="w-full shrink-0 snap-center snap-always px-2">
-              <Reveal className="max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8">
+              <div className="max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">User Dashboard</h3>
                   <span className="rounded-full bg-blue-500/15 px-3 py-1 text-xs font-semibold text-blue-400">Rider</span>
@@ -314,7 +314,7 @@ const Home = () => {
               </Reveal>
             </div>
             <div className="w-full shrink-0 snap-center snap-always px-2">
-              <Reveal delay={0.1} className="max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8">
+              <div className="max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">Owner Dashboard</h3>
                   <span className="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">Earning</span>
