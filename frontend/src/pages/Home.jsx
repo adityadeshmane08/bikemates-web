@@ -330,6 +330,7 @@ const Home = () => {
                   <p className="text-xs text-white/50">This month’s earnings</p>
                   <p className="text-2xl font-semibold text-primary font-display">₹7,340</p>
                 </div>
+              </div>
             </div>
           </div>
 
