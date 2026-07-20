@@ -29,6 +29,21 @@ const Home = () => {
     if (!el) return;
     setActiveModule(Math.round(el.scrollLeft / el.clientWidth));
   };
+  const [activeDashboard, setActiveDashboard] = useState(0);
+  const dashboardScrollRef = useRef(null);
+
+  const scrollToDashboard = (i) => {
+    const el = dashboardScrollRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+    setActiveDashboard(i);
+  };
+
+  const handleDashboardScroll = () => {
+    const el = dashboardScrollRef.current;
+    if (!el) return;
+    setActiveDashboard(Math.round(el.scrollLeft / el.clientWidth));
+  };
 
   return (
     <div className="overflow-hidden">
@@ -264,40 +279,62 @@ const Home = () => {
       <section className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="Beautiful by design" title="Dashboards everyone actually love." subtitle="Manage everything — bookings, earnings, rides and rewards — from one elegant place." align="center" />
-          <div className="mt-14 grid gap-6 lg:grid-cols-2">
-            <Reveal className="rounded-3xl border border-white/10 bg-surface p-8">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">User Dashboard</h3>
-                <span className="rounded-full bg-blue-500/15 px-3 py-1 text-xs font-semibold text-blue-400">Rider</span>
-              </div>
-              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
-                {USER_DASHBOARD_CARDS.map((c) => (
-                  <div key={c.label} className="flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-center transition-colors hover:border-primary/40">
-                    <Icon name={c.icon} className="h-5 w-5 text-primary" />
-                    <span className="text-[11px] text-white/60">{c.label}</span>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-            <Reveal delay={0.1} className="rounded-3xl border border-white/10 bg-surface p-8">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Owner Dashboard</h3>
-                <span className="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">Earning</span>
-              </div>
-              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {OWNER_DASHBOARD_CARDS.map((c) => (
-                  <div key={c.label} className="flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-center transition-colors hover:border-primary/40">
-                    <Icon name={c.icon} className="h-5 w-5 text-primary" />
-                    <span className="text-[11px] text-white/60">{c.label}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 rounded-2xl bg-primary/10 p-4">
-                <p className="text-xs text-white/50">This month’s earnings</p>
-                <p className="text-2xl font-semibold text-primary font-display">₹7,340</p>
-              </div>
-            </Reveal>
+
+          <div className="mt-10 grid grid-cols-2 gap-2 sm:flex sm:justify-center sm:overflow-x-auto">
+            {["User Dashboard", "Owner Dashboard"].map((label, i) => (
+              <button
+                key={label}
+                onClick={() => scrollToDashboard(i)}
+                className={`shrink-0 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors sm:px-5 sm:text-sm ${activeDashboard === i ? "border-primary bg-primary/15 text-primary" : "border-white/10 bg-white/5 text-white/60 hover:text-white"}`}
+              >
+                {label}
+              </button>
+            ))}
           </div>
+
+          <div
+            ref={dashboardScrollRef}
+            onScroll={handleDashboardScroll}
+            className="mt-8 flex snap-x snap-mandatory overflow-x-auto pb-4 -mx-6 px-6 lg:mx-0 lg:px-0"
+          >
+            <div className="w-full shrink-0 snap-center snap-always px-2">
+              <Reveal className="max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">User Dashboard</h3>
+                  <span className="rounded-full bg-blue-500/15 px-3 py-1 text-xs font-semibold text-blue-400">Rider</span>
+                </div>
+                <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
+                  {USER_DASHBOARD_CARDS.map((c) => (
+                    <div key={c.label} className="flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-center transition-colors hover:border-primary/40">
+                      <Icon name={c.icon} className="h-5 w-5 text-primary" />
+                      <span className="text-[11px] text-white/60">{c.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
+            <div className="w-full shrink-0 snap-center snap-always px-2">
+              <Reveal delay={0.1} className="max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Owner Dashboard</h3>
+                  <span className="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">Earning</span>
+                </div>
+                <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {OWNER_DASHBOARD_CARDS.map((c) => (
+                    <div key={c.label} className="flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-center transition-colors hover:border-primary/40">
+                      <Icon name={c.icon} className="h-5 w-5 text-primary" />
+                      <span className="text-[11px] text-white/60">{c.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 rounded-2xl bg-primary/10 p-4">
+                  <p className="text-xs text-white/50">This month’s earnings</p>
+                  <p className="text-2xl font-semibold text-primary font-display">₹7,340</p>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+
           <div className="mt-8 text-center">
             <CTAButton to="/dashboard" testid="explore-dashboard">Explore the Dashboard</CTAButton>
           </div>
