@@ -21,7 +21,6 @@ const moduleIsDragging = useRef(false);
 const handleModulePointerDown = (e) => {
   moduleDragStartX.current = e.clientX;
   moduleIsDragging.current = true;
-  e.currentTarget.setPointerCapture(e.pointerId);
 };
 
 const handleModulePointerUp = (e) => {
@@ -30,6 +29,10 @@ const handleModulePointerUp = (e) => {
   const diff = moduleDragStartX.current - e.clientX;
   if (diff > 50 && activeModule < MODULES.length - 1) setActiveModule((a) => a + 1);
   else if (diff < -50 && activeModule > 0) setActiveModule((a) => a - 1);
+};
+
+const handleModulePointerLeave = () => {
+  moduleIsDragging.current = false;
 };
   const [activeDashboard, setActiveDashboard] = useState(0);
   const dashboardScrollRef = useRef(null);
@@ -183,11 +186,12 @@ const handleModulePointerUp = (e) => {
             ))}
           </div>
 
-          <div
+         <div
   className="relative mt-10 min-h-[600px] sm:min-h-[520px] cursor-grab select-none active:cursor-grabbing"
   style={{ perspective: "1200px", touchAction: "pan-y" }}
   onPointerDown={handleModulePointerDown}
   onPointerUp={handleModulePointerUp}
+  onPointerLeave={handleModulePointerLeave}
 >
             <div className="relative h-full w-full" style={{ transformStyle: "preserve-3d" }}>
               {MODULES.map((m, i) => {
