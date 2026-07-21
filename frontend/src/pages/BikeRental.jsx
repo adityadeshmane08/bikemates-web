@@ -8,7 +8,7 @@ const BikeRental = () => {
   const rent = MODULES.find((m) => m.id === "rent-bike");
   return (
     <div>
-      <PageHero eyebrow="Bike Rental" title="Need it ? Rent .   Have it ? Earn." subtitle="A trusted, insured, GPS-tracked bike rental marketplace built exclusively for verified students." />
+      <PageHero eyebrow="Bike Rental" title="Need it ? Rent .   Have it ? Earn." subtitle="A trusted, insured bike rental marketplace built exclusively for students & verified users." />
       <ModuleDeepDive module={rent} image={IMAGES.commute} />
       <div className="border-y border-white/10 bg-surface/30">
         <ModuleDeepDive module={owner} image={IMAGES.hero} reverse />
