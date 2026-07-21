@@ -15,20 +15,18 @@ import {
 
 const Home = () => {
   const [activeModule, setActiveModule] = useState(0);
-  const scrollRef = useRef(null);
+  const moduleTouchStartX = useRef(0);
 
-  const scrollToCard = (i) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
-    setActiveModule(i);
+  const handleModuleTouchStart = (e) => {
+    moduleTouchStartX.current = e.touches[0].clientX;
   };
 
-  const handleModuleScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setActiveModule(Math.round(el.scrollLeft / el.clientWidth));
+  const handleModuleTouchEnd = (e) => {
+    const diff = moduleTouchStartX.current - e.changedTouches[0].clientX;
+    if (diff > 50 && activeModule < MODULES.length - 1) setActiveModule((a) => a + 1);
+    else if (diff < -50 && activeModule > 0) setActiveModule((a) => a - 1);
   };
+
   const [activeDashboard, setActiveDashboard] = useState(0);
   const dashboardScrollRef = useRef(null);
 
@@ -128,7 +126,7 @@ const Home = () => {
 
       {/* TRUSTED COLLEGES */}
       <section className="px-6 py-10 lg:px-10">
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/40">Trusted by students & verified users at 320+ campuses & cities</p>
+        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/40">Trusted by students,verified users at 320+ campuses & cities</p>
         <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
           <div className="flex w-max animate-marquee gap-4">
             {[...COLLEGES, ...COLLEGES].map((c, i) => (
@@ -173,7 +171,7 @@ const Home = () => {
             {["List Bike", "Share Ride", "Rent Bike", "Book Ride"].map((label, i) => (
               <button
                 key={label}
-                onClick={() => scrollToCard(i)}
+                onClick={() => setActiveModule(i)}
                 className={`shrink-0 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors sm:px-5 sm:text-sm ${activeModule === i ? "border-primary bg-primary/15 text-primary" : "border-white/10 bg-white/5 text-white/60 hover:text-white"}`}
               >
                 {label}
@@ -182,34 +180,53 @@ const Home = () => {
           </div>
 
           <div
-            ref={scrollRef}
-            onScroll={handleModuleScroll}
-            className="mt-8 flex snap-x snap-mandatory overflow-x-auto pb-4 -mx-6 px-6 lg:mx-0 lg:px-0"
+            className="relative mt-10 min-h-[600px] sm:min-h-[520px]"
+            style={{ perspective: "1200px" }}
+            onTouchStart={handleModuleTouchStart}
+            onTouchEnd={handleModuleTouchEnd}
           >
-            {MODULES.map((m, i) => (
-              <div key={m.id} className="w-full shrink-0 snap-center snap-always px-2">
-                <Link to={m.link} data-testid={`module-card-${m.id}`} className="group block h-full max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8 transition-colors hover:border-white/20">
-                  <div className="flex items-center justify-between">
-                    <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: `${m.accent}22`, color: m.accent }}>{m.tag}</span>
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: `${m.accent}18`, color: m.accent }}>
-                      <Icon name={m.id === "bike-owner" ? "KeyRound" : m.id === "ride-sharer" ? "Users" : m.id === "rent-bike" ? "Bike" : "MapPinned"} className="h-5 w-5" />
-                    </span>
+            <div className="relative h-full w-full" style={{ transformStyle: "preserve-3d" }}>
+              {MODULES.map((m, i) => {
+                const offset = i - activeModule;
+                let cardStyle = {
+                  transition: "transform 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.55s ease, box-shadow 0.55s ease",
+                  backfaceVisibility: "hidden",
+                };
+                if (offset === 0) {
+                  cardStyle = { ...cardStyle, transform: "translateX(0) translateZ(0) rotateY(0deg) scale(1)", opacity: 1, zIndex: 3, boxShadow: `0 25px 50px -12px ${m.accent}40`, pointerEvents: "auto" };
+                } else if (offset === -1) {
+                  cardStyle = { ...cardStyle, transform: "translateX(-38%) translateZ(-120px) rotateY(28deg) scale(0.86)", opacity: 0.35, zIndex: 1, boxShadow: "none", pointerEvents: "none" };
+                } else if (offset === 1) {
+                  cardStyle = { ...cardStyle, transform: "translateX(38%) translateZ(-120px) rotateY(-28deg) scale(0.86)", opacity: 0.35, zIndex: 1, boxShadow: "none", pointerEvents: "none" };
+                } else {
+                  cardStyle = { ...cardStyle, transform: `translateX(${offset > 0 ? "80%" : "-80%"}) translateZ(-200px) scale(0.7)`, opacity: 0, zIndex: 0, pointerEvents: "none" };
+                }
+                return (
+                  <div key={m.id} className="absolute inset-x-0 top-0 mx-auto w-full max-w-xl" style={cardStyle}>
+                    <Link to={m.link} data-testid={`module-card-${m.id}`} className="group block h-full rounded-3xl border border-white/10 bg-surface p-8">
+                      <div className="flex items-center justify-between">
+                        <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: `${m.accent}22`, color: m.accent }}>{m.tag}</span>
+                        <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: `${m.accent}18`, color: m.accent }}>
+                          <Icon name={m.id === "bike-owner" ? "KeyRound" : m.id === "ride-sharer" ? "Users" : m.id === "rent-bike" ? "Bike" : "MapPinned"} className="h-5 w-5" />
+                        </span>
+                      </div>
+                      <h3 className="mt-6 text-2xl font-semibold">{m.title}</h3>
+                      <p className="mt-2 font-medium text-white/80">{m.tagline}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-white/55">{m.description}</p>
+                      <div className="mt-6 flex flex-wrap gap-2">
+                        {m.features.slice(0, 6).map((f) => (
+                          <span key={f} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/60">{f}</span>
+                        ))}
+                        <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/40">+{m.features.length - 6} more</span>
+                      </div>
+                      <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-transform group-hover:translate-x-1">
+                        {m.cta} <Icon name="ArrowRight" className="h-4 w-4" />
+                      </span>
+                    </Link>
                   </div>
-                  <h3 className="mt-6 text-2xl font-semibold">{m.title}</h3>
-                  <p className="mt-2 font-medium text-white/80">{m.tagline}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-white/55">{m.description}</p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {m.features.slice(0, 6).map((f) => (
-                      <span key={f} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/60">{f}</span>
-                    ))}
-                    <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/40">+{m.features.length - 6} more</span>
-                  </div>
-                  <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-transform group-hover:translate-x-1">
-                    {m.cta} <Icon name="ArrowRight" className="h-4 w-4" />
-                  </span>
-                </Link>
-              </div>
-            ))}
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -311,7 +328,7 @@ const Home = () => {
                     </div>
                   ))}
                 </div>
-               </div>
+              </div>
             </div>
             <div className="w-full shrink-0 snap-center snap-always px-2">
               <div className="max-w-xl mx-auto rounded-3xl border border-white/10 bg-surface p-8">
@@ -326,7 +343,7 @@ const Home = () => {
                       <span className="text-[11px] text-white/60">{c.label}</span>
                     </div>
                   ))}
-               </div>
+                </div>
                 <div className="mt-4 rounded-2xl bg-primary/10 p-4">
                   <p className="text-xs text-white/50">This month’s earnings</p>
                   <p className="text-2xl font-semibold text-primary font-display">₹7,340</p>
@@ -388,7 +405,7 @@ const Home = () => {
         <div className="mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border border-primary/30 bg-gradient-to-br from-primary/15 via-surface to-surface p-12 text-center lg:p-20">
           <Reveal>
             <h2 className="mx-auto max-w-2xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">Ready to move your campus forward?</h2>
-            <p className="mx-auto mt-5 max-w-xl text-white/60">Join Now , 48,200+ students & verified users already renting, sharing and earning on Bikemates.</p>
+            <p className="mx-auto mt-5 max-w-xl text-white/60">Join 48,200+ verified students already renting, sharing and earning on Bikemates.</p>
             <div className="mt-9 flex flex-wrap justify-center gap-3">
               <CTAButton to="/signup" testid="cta-get-started">Get Started Free</CTAButton>
               <CTAButton to="/how-it-works" testid="cta-how-it-works" variant="secondary" icon={false}>See how it works</CTAButton>
