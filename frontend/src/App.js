@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "@/App.css";
 
-const SITE_PASSWORD = "bikemates2026";
+const SITE_PASSWORD = "BM INDIA 2027";
 
 const PasswordGate = ({ children }) => {
   const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem("bm_unlocked") === "true");
