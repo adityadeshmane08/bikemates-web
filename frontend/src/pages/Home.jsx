@@ -156,7 +156,7 @@ const handleModuleCardClick = (link) => () => {
       <section className="px-6 py-14 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 lg:grid-cols-2">
-            <Reveal className="rounded-3xl border border-white/10 bg-surface p-10">
+            <Reveal className="rounded-3xl border border-white/10 bg-surface p-10 shadow-[0_0_60px_-15px_rgba(248,113,113,0.35)]">
               <span className="text-xs font-semibold uppercase tracking-widest text-red-400/80">The Problem</span>
               <h3 className="mt-4 text-2xl font-semibold sm:text-3xl">Daily commuting is broken.</h3>
               <ul className="mt-6 space-y-4 text-white/60">
