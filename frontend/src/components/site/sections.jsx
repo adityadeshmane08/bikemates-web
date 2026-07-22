@@ -1,6 +1,11 @@
 import React from "react";
 import { CTAButton, Reveal, SectionHeading, Icon } from "@/components/site/primitives";
-
+const MODULE_APP_LINKS = {
+  "bike-owner": "/app/list-bike",
+  "ride-sharer": "/app/share-ride",
+  "rent-bike": "/app/rent-bike",
+  "book-ride": "/app/book-ride",
+};
 export const FinalCTA = ({ title = "Ready to ride smarter?", subtitle = "Join thousands of verified students on Bikemates.", primary = { to: "/signup", label: "Get Started Free", testid: "final-cta-primary" }, secondary = { to: "/how-it-works", label: "How it works", testid: "final-cta-secondary" } }) => (
   <section className="px-6 py-24 lg:px-10">
     <div className="mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border border-primary/30 bg-gradient-to-br from-primary/15 via-surface to-surface p-12 text-center lg:p-20">
@@ -40,7 +45,7 @@ export const ModuleDeepDive = ({ module, image, reverse = false }) => (
             </div>
           ))}
         </div>
-        <CTAButton to={module.link} testid={`${module.id}-cta`} className="mt-8">{module.cta}</CTAButton>
+       <CTAButton to={MODULE_APP_LINKS[module.id]} testid={`${module.id}-cta`} className="mt-8">{module.cta}</CTAButton>
       </Reveal>
     </div>
   </section>
