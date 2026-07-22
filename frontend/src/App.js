@@ -1,5 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "@/App.css";
+
+const SITE_PASSWORD = "bikemates2026";
+
+const PasswordGate = ({ children }) => {
+  const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem("bm_unlocked") === "true");
+  const [input, setInput] = useState("");
+  const [error, setError] = useState(false);
+
+  if (unlocked) return children;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (input === SITE_PASSWORD) {
+      sessionStorage.setItem("bm_unlocked", "true");
+      setUnlocked(true);
+    } else {
+      setError(true);
+    }
+  };
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+      <form onSubmit={handleSubmit} style={{ width: "100%", maxWidth: "360px", textAlign: "center" }}>
+        <h1 style={{ color: "#fff", fontSize: "22px", fontWeight: 700, marginBottom: "8px" }}>BikeMates</h1>
+        <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", marginBottom: "24px" }}>This site is under construction. Enter the password to continue.</p>
+        <input
+          type="password"
+          value={input}
+          onChange={(e) => { setInput(e.target.value); setError(false); }}
+          placeholder="Password"
+          style={{ width: "100%", padding: "12px 16px", borderRadius: "999px", border: error ? "1px solid #ef4444" : "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "#fff", fontSize: "14px", outline: "none", marginBottom: "12px" }}
+        />
+        {error && <p style={{ color: "#ef4444", fontSize: "13px", marginBottom: "12px" }}>Incorrect password, try again.</p>}
+        <button type="submit" style={{ width: "100%", padding: "12px", borderRadius: "999px", border: "none", background: "#FF4B00", color: "#fff", fontWeight: 700, fontSize: "14px", cursor: "pointer" }}>
+          Enter
+        </button>
+      </form>
+    </div>
+  );
+};
 import { HashRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/auth";
@@ -73,6 +113,7 @@ const SiteLayout = () => (
 
 function App() {
   return (
+    <PasswordGate>
     <div className="App">
       <div className="noise-overlay" />
       <HashRouter>
@@ -139,8 +180,9 @@ function App() {
             </Routes>
           </StoreProvider>
         </AuthProvider>
-      </HashRouter>
+     </HashRouter>
     </div>
+    </PasswordGate>
   );
 }
 
