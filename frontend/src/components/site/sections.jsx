@@ -40,7 +40,7 @@ export const ModuleDeepDive = ({ module, image, reverse = false }) => (
             </div>
           ))}
         </div>
-        <CTAButton to="/signup" testid={`${module.id}-cta`} className="mt-8">{module.cta}</CTAButton>
+        <CTAButton to={module.link} testid={`${module.id}-cta`} className="mt-8">{module.cta}</CTAButton>
       </Reveal>
     </div>
   </section>
