@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, Navigation, ShieldCheck, Wallet, MapPin, Zap } from "lucide-react";
 import {
@@ -17,22 +17,31 @@ const Home = () => {
   const [activeModule, setActiveModule] = useState(0);
 const moduleDragStartX = useRef(0);
 const moduleIsDragging = useRef(false);
+const moduleDragged = useRef(false);
+const navigate = useNavigate();
 
 const handleModulePointerDown = (e) => {
   moduleDragStartX.current = e.clientX;
   moduleIsDragging.current = true;
+  moduleDragged.current = false;
+  e.currentTarget.setPointerCapture(e.pointerId);
 };
 
 const handleModulePointerUp = (e) => {
   if (!moduleIsDragging.current) return;
   moduleIsDragging.current = false;
   const diff = moduleDragStartX.current - e.clientX;
+  if (Math.abs(diff) > 8) moduleDragged.current = true;
   if (diff > 50 && activeModule < MODULES.length - 1) setActiveModule((a) => a + 1);
   else if (diff < -50 && activeModule > 0) setActiveModule((a) => a - 1);
 };
 
-const handleModulePointerLeave = () => {
-  moduleIsDragging.current = false;
+const handleModuleCardClick = (link) => () => {
+  if (moduleDragged.current) {
+    moduleDragged.current = false;
+    return;
+  }
+  navigate(link);
 };
   const [activeDashboard, setActiveDashboard] = useState(0);
   const dashboardScrollRef = useRef(null);
@@ -187,11 +196,10 @@ const handleModulePointerLeave = () => {
           </div>
 
          <div
-  className="relative mt-10 min-h-[600px] sm:min-h-[520px] cursor-grab select-none active:cursor-grabbing"
+  className="relative mt-10 min-h-[600px] sm:min-h-[520px] select-none"
   style={{ perspective: "1200px", touchAction: "pan-y" }}
   onPointerDown={handleModulePointerDown}
   onPointerUp={handleModulePointerUp}
-  onPointerLeave={handleModulePointerLeave}
 >
             <div className="relative h-full w-full" style={{ transformStyle: "preserve-3d" }}>
               {MODULES.map((m, i) => {
@@ -211,7 +219,7 @@ const handleModulePointerLeave = () => {
                 }
                 return (
                   <div key={m.id} className="absolute inset-x-0 top-0 mx-auto w-full max-w-xl" style={cardStyle}>
-                    <Link to={m.link} data-testid={`module-card-${m.id}`} draggable={false} onDragStart={(e) => e.preventDefault()} className="group block h-full rounded-3xl border border-white/10 bg-surface p-8">
+                    <div onClick={handleModuleCardClick(m.link)} data-testid={`module-card-${m.id}`} className="group block h-full cursor-pointer rounded-3xl border border-white/10 bg-surface p-8">
                       <div className="flex items-center justify-between">
                         <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: `${m.accent}22`, color: m.accent }}>{m.tag}</span>
                         <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: `${m.accent}18`, color: m.accent }}>
@@ -230,7 +238,7 @@ const handleModulePointerLeave = () => {
                       <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-transform group-hover:translate-x-1">
                         {m.cta} <Icon name="ArrowRight" className="h-4 w-4" />
                       </span>
-                    </Link>
+                    </div>
                   </div>
                 );
               })}
