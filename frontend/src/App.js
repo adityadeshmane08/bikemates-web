@@ -21,22 +21,38 @@ const PasswordGate = ({ children }) => {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
-      <form onSubmit={handleSubmit} style={{ width: "100%", maxWidth: "360px", textAlign: "center" }}>
-        <h1 style={{ color: "#fff", fontSize: "22px", fontWeight: 700, marginBottom: "8px" }}>BikeMates</h1>
-        <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", marginBottom: "24px" }}>This site is under construction. Enter the password to continue.</p>
-        <input
-          type="password"
-          value={input}
-          onChange={(e) => { setInput(e.target.value); setError(false); }}
-          placeholder="Password"
-          style={{ width: "100%", padding: "12px 16px", borderRadius: "999px", border: error ? "1px solid #ef4444" : "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "#fff", fontSize: "14px", outline: "none", marginBottom: "12px" }}
-        />
-        {error && <p style={{ color: "#ef4444", fontSize: "13px", marginBottom: "12px" }}>Incorrect password, try again.</p>}
-        <button type="submit" style={{ width: "100%", padding: "12px", borderRadius: "999px", border: "none", background: "#FF4B00", color: "#fff", fontWeight: 700, fontSize: "14px", cursor: "pointer" }}>
-          Enter
-        </button>
-      </form>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-6">
+      <div className="noise-overlay" />
+      <div className="pointer-events-none absolute -top-20 left-1/2 h-[600px] w-[900px] -translate-x-1/2 radial-glow" />
+
+      <div className="relative z-10 w-full max-w-sm text-center">
+        <img src={process.env.PUBLIC_URL + "/logo.jpg"} alt="Bikemates" className="mx-auto h-16 w-auto rounded-xl object-contain" />
+        <h1 className="mt-5 font-display text-2xl font-semibold text-white">BikeMates</h1>
+
+        <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" /> Coming Soon
+        </span>
+
+        <p className="mx-auto mt-4 max-w-xs text-sm leading-relaxed text-white/50">
+          We're putting the finishing touches on India's next mobility network. Enter the password to preview.
+        </p>
+
+        <form onSubmit={handleSubmit} className="mt-8">
+          <input
+            type="password"
+            value={input}
+            onChange={(e) => { setInput(e.target.value); setError(false); }}
+            placeholder="Password"
+            className={`w-full rounded-full border bg-white/5 px-5 py-3 text-center text-sm text-white outline-none transition-colors placeholder:text-white/30 ${error ? "border-red-500" : "border-white/15 focus:border-primary/50"}`}
+          />
+          {error && <p className="mt-2 text-xs text-red-400">Incorrect password, try again.</p>}
+          <button type="submit" className="mt-4 w-full rounded-full bg-primary py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90">
+            Enter
+          </button>
+        </form>
+
+        <p className="mt-8 text-xs text-white/25">©️ 2026 Bikemates India Pvt. Ltd.</p>
+      </div>
     </div>
   );
 };
