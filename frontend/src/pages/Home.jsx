@@ -165,7 +165,7 @@ const handleModuleCardClick = (link) => () => {
                 ))}
               </ul>
             </Reveal>
-            <Reveal delay={0.1} className="rounded-3xl border border-primary/30 bg-gradient-to-b from-primary/10 to-transparent p-10">
+            <Reveal delay={0.1} className="rounded-3xl border border-emerald-400/30 bg-gradient-to-b from-emerald-400/10 to-transparent p-10 shadow-[0_0_60px_-15px_rgba(52,211,153,0.35)]">
               <span className="text-xs font-semibold uppercase tracking-widest text-primary">The Solution</span>
               <h3 className="mt-4 text-2xl font-semibold sm:text-3xl">BikeMates - A trusted mobility network.</h3>
               <ul className="mt-6 space-y-4 text-white/70">
