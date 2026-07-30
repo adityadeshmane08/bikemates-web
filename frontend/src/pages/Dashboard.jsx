@@ -144,9 +144,9 @@ const Dashboard = () => {
                   <h2 className="text-lg font-semibold">Nearby bikes for you</h2>
                   <button onClick={() => nav("/app/rent-bike")} className="text-sm font-semibold text-primary">View all →</button>
                 </div>
-                <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <<div className="mt-5 flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory -mx-5 px-5 lg:-mx-10 lg:px-10">
                   {store.bikes.filter((b) => !b.mine).slice(0, 4).map((b) => (
-                    <div key={b.id} className="overflow-hidden rounded-2xl border border-white/10 bg-surface">
+                    <div key={b.id} className="w-[80%] shrink-0 snap-center overflow-hidden rounded-2xl border border-white/10 bg-surface sm:w-[300px]">
                       <div className="relative h-32">
                         <img src={b.image} alt={b.name} className="h-full w-full object-cover" />
                         <span className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[10px] backdrop-blur-sm"><Icon name="MapPin" className="h-3 w-3" />{b.distance} km</span>
