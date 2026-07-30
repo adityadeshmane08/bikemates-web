@@ -58,16 +58,7 @@ const Dashboard = () => {
           <div className="pointer-events-none absolute -bottom-10 right-0 h-[280px] w-[280px] rounded-full bg-primary/25 blur-[90px]" />
 
           <div className="relative flex h-full flex-col justify-between px-5 pb-16 pt-6 lg:px-10">
-            <div className="flex items-center justify-between">
-              <span className="font-display text-lg font-semibold">Bike<span className="text-primary">Mates</span></span>
-              <div className="flex items-center gap-3">
-                <button className="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur-md">
-                  <Icon name="Bell" className="h-4 w-4" />
-                  {store.bookings.length > 0 && <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary" />}
-                </button>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary/50 bg-primary text-sm font-bold">{name[0]?.toUpperCase()}</span>
-              </div>
-            </div>
+            <span className="font-display text-lg font-semibold">Bike<span className="text-primary">Mates</span></span>
 
             <Reveal>
               <p className="text-sm text-white/60">{timeGreeting()},</p>
@@ -82,28 +73,31 @@ const Dashboard = () => {
       </div>
 
       {/* FLOATING GLASS WALLET CARD — overlaps the hero */}
-      <Reveal delay={0.1} className="relative z-10 -mt-10 px-0">
-        <div className="rounded-3xl border border-white/10 bg-[#111]/80 p-6 shadow-2xl shadow-black/50 backdrop-blur-2xl sm:p-8">
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
-            <div>
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-primary"><Icon name="Wallet" className="h-5 w-5" /></span>
-              <p className="mt-3 font-display text-2xl font-bold sm:text-3xl"><Counter value={store.wallet} prefix="₹" /></p>
-              <p className="mt-1 text-xs text-white/50">Wallet Balance</p>
-              {weeklyIn > 0 && <p className="mt-1 text-xs font-medium text-emerald-400">+₹{weeklyIn} this week</p>}
+      <Reveal delay={0.1} className="relative z-10 -mt-6 px-0">
+        <div className="rounded-2xl border border-white/10 bg-[#111]/80 p-4 shadow-2xl shadow-black/50 backdrop-blur-2xl">
+          <div className="flex items-center gap-4">
+            <div className="flex flex-1 items-center gap-2.5">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 text-primary"><Icon name="Wallet" className="h-4 w-4" /></span>
+              <div>
+                <p className="font-display text-base font-bold"><Counter value={store.wallet} prefix="₹" /></p>
+                <p className="text-[10px] text-white/50">Wallet Balance</p>
+              </div>
             </div>
-            <div>
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/15 text-blue-400"><Icon name="CalendarCheck" className="h-5 w-5" /></span>
-              <p className="mt-3 font-display text-2xl font-bold sm:text-3xl"><Counter value={store.bookings.length} /></p>
-              <p className="mt-1 text-xs text-white/50">Active Bookings</p>
+            <div className="h-8 w-px bg-white/10" />
+            <div className="flex flex-1 items-center gap-2.5">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/15 text-blue-400"><Icon name="CalendarCheck" className="h-4 w-4" /></span>
+              <div>
+                <p className="font-display text-base font-bold"><Counter value={store.bookings.length} /></p>
+                <p className="text-[10px] text-white/50">Active Bookings</p>
+              </div>
             </div>
-            <button onClick={() => nav("/app/wallet")} className="col-span-2 flex items-center gap-1.5 self-end text-sm font-semibold text-primary sm:col-span-1 sm:justify-self-end sm:self-center">
-              View details <Icon name="ArrowRight" className="h-4 w-4" />
+            <button onClick={() => nav("/app/wallet")} className="shrink-0 text-white/40">
+              <Icon name="ChevronRight" className="h-4 w-4" />
             </button>
           </div>
         </div>
       </Reveal>
-
-      {/* CORE ACTIONS */}
+     {/* CORE ACTIONS */}
       <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
         {TABS.map((t) => {
           const active = tab === t.id;
@@ -144,6 +138,9 @@ const Dashboard = () => {
                   <h2 className="text-lg font-semibold">Nearby bikes for you</h2>
                   <button onClick={() => nav("/app/rent-bike")} className="text-sm font-semibold text-primary">View all →</button>
                 </div>
+                <button onClick={() => nav("/app/rent-bike")} className="mt-4 flex w-full items-center gap-2.5 rounded-full border border-white/10 bg-surface px-4 py-3 text-left text-sm text-white/40">
+                  <Icon name="Search" className="h-4 w-4" /> Search bikes, owners or colleges...
+                </button>
                 <div className="mt-5 flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory -mx-5 px-5 lg:-mx-10 lg:px-10">
                   {store.bikes.filter((b) => !b.mine).slice(0, 4).map((b) => (
                     <div key={b.id} className="w-[80%] shrink-0 snap-center overflow-hidden rounded-2xl border border-white/10 bg-surface sm:w-[300px]">
@@ -245,34 +242,22 @@ const Dashboard = () => {
       </div>
 
       {/* IMPACT STATS */}
-      <div className="mt-14 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mt-14 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
           { label: "Money Saved", value: moneySaved, prefix: "₹", icon: "PiggyBank" },
           { label: "Fuel Saved", value: fuelSaved, suffix: "L", icon: "Fuel" },
           { label: "CO₂ Reduced", value: co2Saved, suffix: "kg", icon: "Leaf" },
           { label: "Ride Streak", value: streak, suffix: " days", icon: "Flame" },
         ].map((s) => (
-          <Reveal key={s.label} className="rounded-2xl border border-white/10 bg-surface p-5">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/12 text-primary"><Icon name={s.icon} className="h-5 w-5" /></span>
-            <p className="mt-3 font-display text-xl font-bold sm:text-2xl"><Counter value={s.value} prefix={s.prefix || ""} suffix={s.suffix || ""} /></p>
-            <p className="mt-1 text-xs text-white/50">{s.label}</p>
+          <Reveal key={s.label} className="flex items-center gap-3 rounded-xl border border-white/10 bg-surface p-3.5">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/12 text-primary"><Icon name={s.icon} className="h-4 w-4" /></span>
+            <div className="min-w-0">
+              <p className="font-display text-base font-bold"><Counter value={s.value} prefix={s.prefix || ""} suffix={s.suffix || ""} /></p>
+              <p className="truncate text-[10px] text-white/50">{s.label}</p>
+            </div>
           </Reveal>
         ))}
       </div>
-
-      {/* ACHIEVEMENTS */}
-      <div className="mt-14">
-        <h2 className="mb-4 text-lg font-semibold">Achievements</h2>
-        <div className="flex flex-wrap gap-3">
-          {ACHIEVEMENTS.map((a) => (
-            <div key={a.label} className="flex items-center gap-2.5 rounded-full border border-white/10 bg-surface py-2 pl-2.5 pr-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: `${a.color}20`, color: a.color }}><Icon name={a.icon} className="h-4 w-4" /></span>
-              <span className="text-xs font-semibold">{a.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* RECENT ACTIVITY + TRUST */}
       <div className="mt-14 grid gap-6 lg:grid-cols-3">
         <div className="rounded-3xl border border-white/10 bg-surface p-6 sm:p-8 lg:col-span-2">
@@ -313,5 +298,16 @@ const Dashboard = () => {
     </div>
   );
 };
-
+{/* ACHIEVEMENTS */}
+      <div className="mt-14">
+        <h2 className="mb-4 text-lg font-semibold">Achievements</h2>
+        <div className="flex flex-wrap gap-3">
+          {ACHIEVEMENTS.map((a) => (
+            <div key={a.label} className="flex items-center gap-2.5 rounded-full border border-white/10 bg-surface py-2 pl-2.5 pr-4">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: `${a.color}20`, color: a.color }}><Icon name={a.icon} className="h-4 w-4" /></span>
+              <span className="text-xs font-semibold">{a.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
 export default Dashboard;
