@@ -52,7 +52,7 @@ const Dashboard = () => {
       {/* HERO — breaks out of the page's default padding for a full-bleed banner */}
       <div className="relative -mx-5 -mt-8 overflow-hidden lg:-mx-10">
         <div className="relative h-[380px] sm:h-[420px]">
-          <img src={IMAGES.dashboardHero} alt="" className="absolute inset-0 h-full w-full object-cover" />
+         <img src={IMAGES.dashboardHero} alt="" className="absolute inset-0 h-full w-full object-cover object-center" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-black/20" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/70 via-transparent to-transparent" />
           <div className="pointer-events-none absolute -bottom-10 right-0 h-[280px] w-[280px] rounded-full bg-primary/25 blur-[90px]" />
