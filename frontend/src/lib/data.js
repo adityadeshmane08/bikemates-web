@@ -191,6 +191,7 @@ export const MORE_LINKS = [
 
 export const IMAGES = {
   hero: "https://images.unsplash.com/photo-1600497934947-23786a93f382?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200",
+  dashboardHero: "/dashboard-hero.jpg",
   commute: "https://images.unsplash.com/photo-1597755269789-89407cf1a199?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200",
   campus: "https://images.unsplash.com/photo-1760917094679-d33f2ec13110?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200",
 };
