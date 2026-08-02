@@ -1,13 +1,16 @@
 import React, { useState, useMemo } from "react";
 import { toast } from "sonner";
-import { Star, Search, Clock, Users, ArrowRight, Navigation } from "lucide-react";
+import { Star, Search, Clock, Users, ArrowRight, Navigation, List, Map as MapIcon } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { AppHeader } from "@/components/app/ui";
+import { MapView } from "@/components/site/MapView";
+import { coordsFromDistance } from "@/lib/geo";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const BookRide = () => {
   const store = useStore();
   const [q, setQ] = useState("");
+  const [view, setView] = useState("list"); // list | map
   const [selected, setSelected] = useState(null);
   const [booked, setBooked] = useState(false);
 
@@ -31,6 +34,21 @@ const BookRide = () => {
         <input data-testid="ride-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by pickup, drop or driver..."
           className="w-full rounded-full border border-white/10 bg-surface py-3 pl-11 pr-4 text-sm text-white placeholder:text-white/40 focus:border-primary focus:outline-none" />
       </div>
+
+      <div className="mb-6 flex items-center gap-2">
+        <button onClick={() => setView("list")} className={`flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold ${view === "list" ? "border-primary bg-primary/15 text-primary" : "border-white/10 text-white/60"}`}><List className="h-3.5 w-3.5" /> List</button>
+        <button onClick={() => setView("map")} className={`flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold ${view === "map" ? "border-primary bg-primary/15 text-primary" : "border-white/10 text-white/60"}`}><MapIcon className="h-3.5 w-3.5" /> Map</button>
+      </div>
+
+      {view === "map" && (
+        <div className="mb-6" style={{ height: "50vh" }}>
+          <MapView
+            height="100%"
+            markers={rides.map((r) => ({ id: r.id, ...coordsFromDistance(r.id, (r.fuelSplit % 5) + 0.5), color: "#A855F7" }))}
+            onMarkerClick={(m) => { const r = rides.find((x) => x.id === m.id); if (r) open(r); }}
+          />
+        </div>
+      )}
 
       {rides.length === 0 ? (
         <p className="py-16 text-center text-white/50">No rides match your search.</p>
@@ -110,7 +128,7 @@ const BookRide = () => {
             <div className="py-2 text-center">
               <DialogHeader><DialogTitle className="text-center text-xl">Seat confirmed 🎉</DialogTitle></DialogHeader>
               <span className="mx-auto mt-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-400"><Navigation className="h-8 w-8" /></span>
-              <p className="mt-4 text-sm text-white/55">You’re riding with {selected.driver} from {selected.from} to {selected.to}. Live tracking activates 15 minutes before pickup.</p>
+              <p className="mt-4 text-sm text-white/55">You're riding with {selected.driver} from {selected.from} to {selected.to}. Live tracking activates 15 minutes before pickup.</p>
               <button onClick={() => setSelected(null)} data-testid="close-ride-confirm" className="mt-6 w-full rounded-full border border-white/20 py-3 text-sm font-semibold transition-colors hover:bg-white/5">Done</button>
             </div>
           )}
