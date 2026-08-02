@@ -34,7 +34,7 @@ export const MapView = ({
   height = "100%",
   onMarkerClick = () => {},
 }) => (
-  <div className="relative overflow-hidden rounded-3xl border border-white/10" style={{ height }}>
+  <div className="isolate relative z-0 overflow-hidden rounded-3xl border border-white/10" style={{ height }}>
     <MapContainer center={[center.lat, center.lng]} zoom={zoom} style={{ height: "100%", width: "100%", background: "#0a0a0a" }} zoomControl={false} attributionControl={false}>
       <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
 
