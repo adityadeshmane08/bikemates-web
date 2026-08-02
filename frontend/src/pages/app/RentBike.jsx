@@ -1,9 +1,11 @@
 import React, { useState, useMemo } from "react";
 import { toast } from "sonner";
-import { Star, MapPin, Search, Fuel, Cog, Calendar } from "lucide-react";
+import { Star, MapPin, Search, Fuel, Cog, Calendar, List, Map as MapIcon } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { AppHeader, Chip } from "@/components/app/ui";
 import { Icon } from "@/components/site/primitives";
+import { MapView } from "@/components/site/MapView";
+import { coordsFromDistance } from "@/lib/geo";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const TYPES = ["All", "Scooter", "Sports", "Cruiser", "Electric"];
@@ -12,6 +14,7 @@ const RentBike = () => {
   const store = useStore();
   const [q, setQ] = useState("");
   const [type, setType] = useState("All");
+  const [view, setView] = useState("list"); // list | map
   const [selected, setSelected] = useState(null);
   const [plan, setPlan] = useState("daily");
   const [step, setStep] = useState("details"); // details | confirm
@@ -45,6 +48,21 @@ const RentBike = () => {
           {TYPES.map((t) => <Chip key={t} active={type === t} onClick={() => setType(t)} testid={`filter-${t.toLowerCase()}`}>{t}</Chip>)}
         </div>
       </div>
+
+      <div className="mb-6 flex items-center gap-2">
+        <button onClick={() => setView("list")} className={`flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold ${view === "list" ? "border-primary bg-primary/15 text-primary" : "border-white/10 text-white/60"}`}><List className="h-3.5 w-3.5" /> List</button>
+        <button onClick={() => setView("map")} className={`flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold ${view === "map" ? "border-primary bg-primary/15 text-primary" : "border-white/10 text-white/60"}`}><MapIcon className="h-3.5 w-3.5" /> Map</button>
+      </div>
+
+      {view === "map" && (
+        <div className="mb-6" style={{ height: "50vh" }}>
+          <MapView
+            height="100%"
+            markers={bikes.map((b) => ({ id: b.id, ...coordsFromDistance(b.id, b.distance), color: b.status === "Available" ? "#22C55E" : "#FF4B00" }))}
+            onMarkerClick={(m) => { const b = bikes.find((x) => x.id === m.id); if (b) open(b); }}
+          />
+        </div>
+      )}
 
       {bikes.length === 0 ? (
         <p className="py-16 text-center text-white/50">No bikes match your search.</p>
