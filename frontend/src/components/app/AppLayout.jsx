@@ -22,6 +22,12 @@ const NAV = [
     { to: "/app/share-ride", label: "List Route / Share Ride", icon: "Users" },
     { to: "/app/my-bikes", label: "My Bikes", icon: "Bike" },
     { to: "/app/my-rides", label: "My Rides", icon: "Route" },
+    { to: "/app/booking-requests", label: "Booking Requests", icon: "Inbox" },
+    { to: "/app/availability-calendar", label: "Availability Calendar", icon: "Calendar" },
+    { to: "/app/earnings", label: "Earnings", icon: "TrendingUp" },
+    { to: "/app/analytics", label: "Analytics", icon: "BarChart3" },
+    { to: "/app/reviews", label: "Reviews", icon: "Star" },
+    { to: "/app/gps-tracking", label: "GPS Tracking", icon: "Navigation" },
   ]},
   { section: "Account", items: [
     { to: "/app/wallet", label: "Wallet", icon: "Wallet" },
