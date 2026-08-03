@@ -64,6 +64,18 @@ export const StoreProvider = ({ children }) => {
     setState((s) => ({ ...s, bikes: [{ ...bike, id: "b" + Date.now(), mine: true, owner: "You", rating: 5.0, trips: 0, available: true, distance: 0, image: bike.image || img(0) }, ...s.bikes] }));
   }, []);
 
+  const deleteBike = useCallback((id) => {
+    setState((s) => ({ ...s, bikes: s.bikes.filter((b) => b.id !== id) }));
+  }, []);
+
+  const toggleBikeAvailability = useCallback((id) => {
+    setState((s) => ({ ...s, bikes: s.bikes.map((b) => b.id === id ? { ...b, available: !b.available, status: !b.available ? "Available" : "Booked" } : b) }));
+  }, []);
+
+  const setGeofence = useCallback((id, patch) => {
+    setState((s) => ({ ...s, bikes: s.bikes.map((b) => b.id === id ? { ...b, geofence: { ...(b.geofence || { enabled: false, radiusM: 500, breached: false }), ...patch } } : b) }));
+  }, []);
+
   const addRide = useCallback((ride) => {
     setState((s) => ({ ...s, rides: [{ ...ride, id: "r" + Date.now(), mine: true, driver: "You", rating: 5.0, seatsTotal: Number(ride.seats) }, ...s.rides] }));
   }, []);
@@ -97,7 +109,7 @@ export const StoreProvider = ({ children }) => {
 
   const reset = useCallback(() => { localStorage.removeItem(KEY); setState(seed); }, []);
 
-  const value = { ...state, addBike, addRide, bookBike, bookRide, topUp, withdraw, reset,
+ const value = { ...state, addBike, deleteBike, toggleBikeAvailability, setGeofence, addRide, bookBike, bookRide, topUp, withdraw, reset,
     myBikes: state.bikes.filter((b) => b.mine), myRides: state.rides.filter((r) => r.mine) };
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
