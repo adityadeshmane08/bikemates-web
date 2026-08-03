@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Polyline, Circle, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { CENTER } from "@/lib/geo";
@@ -29,6 +29,7 @@ export const MapView = ({
   markers = [],
   route = null,
   liveMarker = null,
+  circle = null,
   center = CENTER,
   zoom = 13,
   height = "100%",
@@ -43,7 +44,13 @@ export const MapView = ({
       ))}
 
       {route && <Polyline positions={route.map((p) => [p.lat, p.lng])} pathOptions={{ color: "#FF4B00", weight: 4, dashArray: "8 8", opacity: 0.85 }} />}
-
+{circle && (
+        <Circle
+          center={[circle.lat, circle.lng]}
+          radius={circle.radiusM}
+          pathOptions={{ color: circle.breached ? "#EF4444" : "#22C55E", fillColor: circle.breached ? "#EF4444" : "#22C55E", fillOpacity: 0.12, weight: 2 }}
+        />
+      )}
       {liveMarker && (
         <>
           <Marker position={[liveMarker.lat, liveMarker.lng]} icon={pinIcon("#FF4B00", true)} />
