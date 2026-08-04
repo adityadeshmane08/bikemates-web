@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { Star, Check, X, Trash2, MapPin as MapPinIcon, ShieldAlert } from "lucide-react";
+import { Star, Check, X, Trash2, MapPin as MapPinIcon, ShieldAlert, Radio, Wifi } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { AppHeader, EmptyState, StatusBadge } from "@/components/app/ui";
 import { CTAButton } from "@/components/site/primitives";
@@ -14,9 +14,21 @@ const REQUESTS = [
   { name: "Sahil Gupta", when: "This weekend", amount: 1500 },
 ];
 
-// Owner's own bikes often have distance: 0 (no "distance from me" makes sense for your own bike),
-// so we derive a stable pretend-location from the bike id instead, purely for map display.
+// Owner's own bikes often have distance: 0, so we derive a stable pretend base
+// location from the bike id instead, purely for map display.
 const mapDistanceFor = (b) => (b.distance > 0 ? b.distance : (parseInt(b.id.replace(/\D/g, ""), 10) % 25) / 10 + 0.3);
+
+// Simulates a live GPS "heartbeat": tiny, smooth, time-varying drift around the
+// bike's base location — so it feels like a real signal is coming in, not a frozen pin.
+const liveCoordsFor = (b, tick) => {
+  const base = coordsFromDistance(b.id, mapDistanceFor(b));
+  const seed = parseInt(b.id.replace(/\D/g, ""), 10) || 1;
+  const jitter = b.available ? 0.00025 : 0.00006; // parked bikes drift less than "in use" ones
+  return {
+    lat: base.lat + Math.sin(tick / 3 + seed) * jitter,
+    lng: base.lng + Math.cos(tick / 4 + seed * 1.3) * jitter,
+  };
+};
 
 const MyBikes = () => {
   const store = useStore();
@@ -24,6 +36,17 @@ const MyBikes = () => {
   const [view, setView] = useState("list"); // list | map
   const [geoBike, setGeoBike] = useState(null);
   const [radius, setRadius] = useState(500);
+  const [liveBike, setLiveBike] = useState(null);
+  const [tick, setTick] = useState(0);
+  const [lastPing, setLastPing] = useState(Date.now());
+
+  // Heartbeat: refreshes every 4s so "live" pins/timestamps actually move.
+  useEffect(() => {
+    const id = setInterval(() => { setTick((t) => t + 1); setLastPing(Date.now()); }, 4000);
+    return () => clearInterval(id);
+  }, []);
+
+  const secondsAgo = Math.max(0, Math.round((Date.now() - lastPing) / 1000));
 
   if (store.myBikes.length === 0) {
     return (
@@ -35,11 +58,7 @@ const MyBikes = () => {
     );
   }
 
-  const openGeofence = (b) => {
-    setGeoBike(b);
-    setRadius(b.geofence?.radiusM || 500);
-  };
-
+  const openGeofence = (b) => { setGeoBike(b); setRadius(b.geofence?.radiusM || 500); };
   const saveGeofence = (enabled) => {
     store.setGeofence(geoBike.id, { enabled, radiusM: radius, breached: enabled && geoBike.id === store.myBikes[0]?.id });
     toast.success(enabled ? "Geofence activated for this bike." : "Geofence turned off.");
@@ -53,15 +72,16 @@ const MyBikes = () => {
 
       <div className="mb-6 flex items-center gap-2">
         <button onClick={() => setView("list")} className={`rounded-full border px-4 py-2 text-xs font-semibold ${view === "list" ? "border-primary bg-primary/15 text-primary" : "border-white/10 text-white/60"}`}>List</button>
-        <button onClick={() => setView("map")} className={`rounded-full border px-4 py-2 text-xs font-semibold ${view === "map" ? "border-primary bg-primary/15 text-primary" : "border-white/10 text-white/60"}`}>Fleet Map</button>
+        <button onClick={() => setView("map")} className={`rounded-full border px-4 py-2 text-xs font-semibold ${view === "map" ? "border-primary bg-primary/15 text-primary" : "border-white/10 text-white/60"}`}>Live Fleet Map</button>
       </div>
 
       {view === "map" && (
-        <div className="mb-8" style={{ height: "55vh" }}>
-          <MapView
-            height="100%"
-            markers={store.myBikes.map((b) => ({ id: b.id, ...coordsFromDistance(b.id, mapDistanceFor(b)), color: b.available ? "#22C55E" : "#FF4B00" }))}
-          />
+        <div className="relative mb-8" style={{ height: "55vh" }}>
+          <MapView height="100%" markers={store.myBikes.map((b) => ({ id: b.id, ...liveCoordsFor(b, tick), color: b.available ? "#22C55E" : "#FF4B00" }))} />
+          <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-2 rounded-full glass px-3.5 py-2 text-xs font-semibold">
+            <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" /></span>
+            Live • updated {secondsAgo}s ago
+          </div>
         </div>
       )}
 
@@ -81,15 +101,23 @@ const MyBikes = () => {
                   <span>{b.trips} trips</span>
                   <span className="text-primary font-semibold">₹{b.daily}/day</span>
                 </div>
-                {b.geofence?.enabled && (
-                  <span className={`mt-2 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold ${b.geofence.breached ? "bg-red-500/15 text-red-400" : "bg-emerald-500/15 text-emerald-400"}`}>
-                    <ShieldAlert className="h-3 w-3" /> {b.geofence.breached ? "Outside geofence" : "Within geofence"}
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {b.geofence?.enabled && (
+                    <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold ${b.geofence.breached ? "bg-red-500/15 text-red-400" : "bg-emerald-500/15 text-emerald-400"}`}>
+                      <ShieldAlert className="h-3 w-3" /> {b.geofence.breached ? "Outside geofence" : "Within geofence"}
+                    </span>
+                  )}
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[10px] font-semibold text-white/50">
+                    <Radio className="h-3 w-3 text-emerald-400" /> GPS active
                   </span>
-                )}
+                </div>
               </div>
             </div>
 
             <div className="flex flex-wrap gap-2 border-t border-white/10 px-5 py-4">
+              <button onClick={() => setLiveBike(b)} className="flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-400 transition-colors hover:bg-emerald-500/20">
+                <Wifi className="h-3.5 w-3.5" /> Live Location
+              </button>
               <button onClick={() => store.toggleBikeAvailability(b.id)} className="rounded-full border border-white/15 px-3.5 py-1.5 text-xs font-semibold transition-colors hover:bg-white/5">
                 Mark as {b.available ? "Rented" : "Available"}
               </button>
@@ -124,6 +152,42 @@ const MyBikes = () => {
           </div>
         ))}
       </div>
+
+      {/* LIVE LOCATION dialog — per-bike */}
+      <Dialog open={!!liveBike} onOpenChange={(o) => !o && setLiveBike(null)}>
+        <DialogContent className="max-w-lg border-white/10 bg-surface text-white">
+          {liveBike && (
+            <>
+              <DialogHeader><DialogTitle className="text-xl">{liveBike.name} — Live Location</DialogTitle></DialogHeader>
+              <div style={{ height: "280px" }}>
+                <MapView height="100%" zoom={15} center={liveCoordsFor(liveBike, tick)} liveMarker={liveCoordsFor(liveBike, tick)} />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-2xl bg-white/5 p-4">
+                  <p className="text-xs text-white/45">Status</p>
+                  <p className="mt-1 flex items-center gap-1.5 text-sm font-semibold">
+                    <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" /></span>
+                    {liveBike.available ? "Parked at listed spot" : "Currently on a trip"}
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/5 p-4">
+                  <p className="text-xs text-white/45">GPS signal</p>
+                  <p className="mt-1 text-sm font-semibold text-emerald-400">Strong</p>
+                </div>
+                <div className="rounded-2xl bg-white/5 p-4">
+                  <p className="text-xs text-white/45">Last updated</p>
+                  <p className="mt-1 text-sm font-semibold">{secondsAgo}s ago</p>
+                </div>
+                <div className="rounded-2xl bg-white/5 p-4">
+                  <p className="text-xs text-white/45">Distance from campus</p>
+                  <p className="mt-1 text-sm font-semibold">{mapDistanceFor(liveBike).toFixed(1)} km</p>
+                </div>
+              </div>
+              <button onClick={() => setLiveBike(null)} className="w-full rounded-full border border-white/20 py-3 text-sm font-semibold transition-colors hover:bg-white/5">Close</button>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={!!geoBike} onOpenChange={(o) => !o && setGeoBike(null)}>
         <DialogContent className="max-w-lg border-white/10 bg-surface text-white">
