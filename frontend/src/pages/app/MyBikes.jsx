@@ -207,9 +207,9 @@ const MyBikes = () => {
               <div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-white/60">Radius</span>
-                  <span className="font-semibold">{radius} m</span>
+                  <span className="font-semibold">{radius} km</span>
                 </div>
-                <input type="range" min="100" max="2000" step="50" value={radius} onChange={(e) => setRadius(Number(e.target.value))} className="mt-2 w-full accent-primary" />
+                <input type="range" min="10" max="500" step="50" value={radius} onChange={(e) => setRadius(Number(e.target.value))} className="mt-2 w-full accent-primary" />
               </div>
               <div className="flex gap-2">
                 <button onClick={() => saveGeofence(true)} className="flex-1 rounded-full bg-primary py-3 text-sm font-semibold text-white transition-transform active:scale-95 hover:bg-[#E64300]">
