@@ -250,7 +250,7 @@ const Dashboard = () => {
           <Reveal key={s.label} className="flex items-center gap-3 rounded-xl border border-white/10 bg-surface p-3.5">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/12 text-primary"><Icon name={s.icon} className="h-4 w-4" /></span>
             <div className="min-w-0">
-              <p className={`font-display text-base font-bold ${s.prefix === "₹" ? "text-emerald-400" : ""}`}><Counter value={s.value} prefix={s.prefix || ""} suffix={s.suffix || ""} /></p>
+              <p className="font-display text-base font-bold"><Counter value={s.value} prefix={s.prefix || ""} suffix={s.suffix || ""} /></p>
               <p className="truncate text-[10px] text-white/50">{s.label}</p>
             </div>
           </Reveal>
