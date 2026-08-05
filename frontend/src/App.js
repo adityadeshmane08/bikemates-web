@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "@/App.css";
+
 import { HashRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/auth";
@@ -8,11 +9,13 @@ import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { AppLayout } from "@/components/app/AppLayout";
 
+// ═══════════════════════════════════════════════════════════════════════════
 // PHASE 1 — VISUAL EXPERIENCE UPGRADES
+// ═══════════════════════════════════════════════════════════════════════════
 import { LenisProvider } from "@/hooks/useLenis";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
+// ═══════════════════════════════════════════════════════════════════════════
 
-// PAGES
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Features from "@/pages/Features";
@@ -34,6 +37,7 @@ import PressKit from "@/pages/PressKit";
 import Legal from "@/pages/Legal";
 import NotFound from "@/pages/NotFound";
 import { Login, Signup } from "@/pages/Auth";
+
 import Dashboard from "@/pages/Dashboard";
 import RentBike from "@/pages/app/RentBike";
 import BookRide from "@/pages/app/BookRide";
@@ -62,7 +66,7 @@ import Panels from "@/pages/app/Panels";
 const SITE_PASSWORD = "BM INDIA 2027";
 
 const PasswordGate = ({ children }) => {
-  const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem("bm_unlocked"));
+  const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem("bm_unlocked") === "true");
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
 
@@ -79,41 +83,43 @@ const PasswordGate = ({ children }) => {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-6">
       <div className="noise-overlay" />
-      <div className="pointer-events-none absolute -top-20 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-primary/20 blur-[120px]" />
+      <div className="pointer-events-none absolute -top-20 left-1/2 h-[600px] w-[900px] -translate-x-1/2 radial-glow" />
+
       <div className="relative z-10 w-full max-w-sm text-center">
-        <img src={process.env.PUBLIC_URL + "/logo.jpg"} alt="Bikemates" className="mx-auto h-12 w-12 rounded-xl" />
+        <img src={process.env.PUBLIC_URL + "/logo.jpg"} alt="Bikemates" className="mx-auto h-16 w-auto rounded-xl object-contain" />
         <h1 className="mt-5 font-display text-2xl font-semibold text-white">BikeMates</h1>
-        <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-          Under Construction
+
+        <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" /> Coming Soon
         </span>
+
         <p className="mx-auto mt-4 max-w-xs text-sm leading-relaxed text-white/50">
-          We're putting the finishing touches on India's next mobility network.
+          We're putting the finishing touches on India's next mobility network. Enter the password to preview.
         </p>
+
         <form onSubmit={handleSubmit} className="mt-8">
           <input
             type="password"
             value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
-              setError(false);
-            }}
+            onChange={(e) => { setInput(e.target.value); setError(false); }}
             placeholder="Password"
-            className="w-full rounded-full border bg-white/5 px-5 py-3 text-center text-sm text-white placeholder-white/30 outline-none focus:border-primary"
+            className={`w-full rounded-full border bg-white/5 px-5 py-3 text-center text-sm text-white outline-none transition-colors placeholder:text-white/30 ${error ? "border-red-500" : "border-white/15 focus:border-primary/50"}`}
           />
-          {error && <p className="mt-2 text-xs text-red-400">Incorrect password</p>}
-          <button type="submit" className="mt-4 w-full rounded-full bg-primary py-3 text-sm font-medium text-white transition-opacity hover:opacity-90">
+          {error && <p className="mt-2 text-xs text-red-400">Incorrect password, try again.</p>}
+          <button type="submit" className="mt-4 w-full rounded-full bg-primary py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90">
             Enter
           </button>
         </form>
+
         <p className="mt-8 text-xs text-white/25">©️ 2026 Bikemates India Pvt. Ltd.</p>
       </div>
     </div>
   );
 };
 
+// ── ScrollToTop (enhanced for Lenis compatibility) ──
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -173,8 +179,10 @@ function App() {
                     <Route path="/terms" element={<Legal type="terms" />} />
                     <Route path="/refund" element={<Legal type="refund" />} />
                   </Route>
+
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<Signup />} />
+
                   <Route element={<AppLayout />}>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/app/panels" element={<Panels />} />
@@ -201,6 +209,7 @@ function App() {
                     <Route path="/app/analytics" element={<Analytics />} />
                     <Route path="/app/reviews" element={<Reviews />} />
                   </Route>
+
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </StoreProvider>
