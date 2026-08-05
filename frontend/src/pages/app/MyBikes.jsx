@@ -99,7 +99,7 @@ const MyBikes = () => {
                 <div className="mt-2 flex items-center gap-3 text-xs text-white/50">
                   <span className="flex items-center gap-1"><Star className="h-3 w-3 fill-primary text-primary" />{b.rating}</span>
                   <span>{b.trips} trips</span>
-                  <span className="text-primary font-semibold">₹{b.daily}/day</span>
+                  <span className="text-emerald-400 font-semibold">₹{b.daily}/day</span>
                 </div>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {b.geofence?.enabled && (
