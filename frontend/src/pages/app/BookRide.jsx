@@ -78,7 +78,7 @@ const BookRide = () => {
               </div>
               <div className="flex items-center justify-between gap-4 lg:flex-col lg:items-end">
                 <div className="text-right">
-                  <p className="text-lg font-semibold text-primary">₹{r.fuelSplit}</p>
+                  <p className="text-lg font-semibold text-emerald-400">₹{r.fuelSplit}</p>
                   <p className="text-xs text-white/45">fuel split</p>
                 </div>
                 <button disabled={r.seats === 0 || r.mine} onClick={() => open(r)} data-testid={`book-ride-${r.id}`}
