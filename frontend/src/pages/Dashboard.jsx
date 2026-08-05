@@ -77,7 +77,7 @@ const Dashboard = () => {
             <div className="flex flex-1 items-center gap-2.5">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 text-primary"><Icon name="Wallet" className="h-4 w-4" /></span>
               <div>
-                <p className="font-display text-base font-bold"><Counter value=(store.wallet) prefix="₹" /></p>
+                <p className="font-display text-base font-bold text-emerald-400"><Counter value={store.wallet} prefix="₹" /></p>
                 <p className="text-[10px] text-white/50">Wallet Balance</p>
               </div>
             </div>
@@ -150,7 +150,7 @@ const Dashboard = () => {
                         <p className="truncate text-sm font-semibold">{b.name}</p>
                         <div className="mt-1 flex items-center gap-1 text-xs text-white/50"><Icon name="Star" className="h-3 w-3 fill-amber-400 text-amber-400" />{b.rating} · {b.type}</div>
                         <div className="mt-3 flex items-center justify-between">
-                          <span className="text-sm font-bold text-primary">₹{b.daily}/day</span>
+                          <span className="text-sm font-bold text-emerald-400">₹{b.daily}/day</span>
                           <button onClick={() => nav("/app/rent-bike")} className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold">Book</button>
                         </div>
                       </div>
@@ -180,8 +180,8 @@ const Dashboard = () => {
                         <span className="text-xs text-white/50">{r.date}, {r.time}</span>
                       </div>
                       <p className="mt-3 text-sm text-white/70">{r.from} <Icon name="ArrowRight" className="mx-1 inline h-3 w-3" /> {r.to}</p>
-                      <div className="mt-3 flex items-center justify-between">
-                        <span className="text-sm font-bold text-primary">₹{r.fuelSplit} split</span>
+                     <div className="mt-3 flex items-center justify-between">
+                        <span className="text-sm font-bold text-emerald-400">₹{r.fuelSplit} split</span>
                         <button onClick={() => nav("/app/book-ride")} className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold">Book seat</button>
                       </div>
                     </div>
@@ -250,7 +250,7 @@ const Dashboard = () => {
           <Reveal key={s.label} className="flex items-center gap-3 rounded-xl border border-white/10 bg-surface p-3.5">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/12 text-primary"><Icon name={s.icon} className="h-4 w-4" /></span>
             <div className="min-w-0">
-              <p className="font-display text-base font-bold"><Counter value={s.value} prefix={s.prefix || ""} suffix={s.suffix || ""} /></p>
+              <p className={`font-display text-base font-bold ${s.prefix === "₹" ? "text-emerald-400" : ""}`}><Counter value={s.value} prefix={s.prefix || ""} suffix={s.suffix || ""} /></p>
               <p className="truncate text-[10px] text-white/50">{s.label}</p>
             </div>
           </Reveal>
