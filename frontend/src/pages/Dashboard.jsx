@@ -256,6 +256,7 @@ const Dashboard = () => {
           </Reveal>
         ))}
       </div>
+     
       {/* RECENT ACTIVITY + TRUST */}
       <div className="mt-14 grid gap-6 lg:grid-cols-3">
         <div className="rounded-3xl border border-white/10 bg-surface p-6 sm:p-8 lg:col-span-2">
@@ -293,10 +294,8 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-{/* ACHIEVEMENTS */}
+
+      {/* ACHIEVEMENTS */}
       <div className="mt-14">
         <h2 className="mb-4 text-lg font-semibold">Achievements</h2>
         <div className="flex flex-wrap gap-3">
@@ -309,7 +308,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-);
+  );
 };
 
 export default Dashboard;
