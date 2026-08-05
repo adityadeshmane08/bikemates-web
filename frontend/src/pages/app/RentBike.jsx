@@ -177,7 +177,7 @@ const RentBike = () => {
                 </div>
                 <div className="mt-4 flex items-end justify-between">
                   <div>
-                    <span className="text-lg font-semibold text-primary">₹{b.daily}</span>
+                    <span className="text-lg font-semibold text-emerald-400">₹{b.daily}</span>
                     <span className="text-xs text-white/45">/day</span>
                   </div>
                   <button onClick={() => open(b)} data-testid={`rent-view-${b.id}`} className="rounded-full bg-primary px-5 py-2 text-xs font-semibold text-white transition-transform active:scale-95 hover:bg-[#E64300]">View & Book</button>
