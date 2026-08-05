@@ -19,6 +19,7 @@ export const useLenis = () => {
     });
  
     lenisRef.current = lenis;
+    window.lenis = lenis; // Make lenis accessible globally
  
     // Connect Lenis to Framer Motion's scroll
     function raf(time) {
@@ -43,6 +44,7 @@ export const useLenis = () => {
     return () => {
       lenis.destroy();
       lenisRef.current = null;
+      window.lenis = null;
     };
   }, []);
  
