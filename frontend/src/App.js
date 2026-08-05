@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import "@/App.css";
+
 import { HashRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/auth";
@@ -61,8 +63,6 @@ import Analytics from "@/pages/app/Analytics";
 import Reviews from "@/pages/app/Reviews";
 import Panels from "@/pages/app/Panels";
 
-import "@/App.css";
-
 const SITE_PASSWORD = "BM INDIA 2027";
 
 const PasswordGate = ({ children }) => {
@@ -113,20 +113,21 @@ const PasswordGate = ({ children }) => {
           </button>
         </form>
 
-        <p className="mt-8 text-xs text-white/25">© 2026 Bikemates India Pvt. Ltd.</p>
+        <p className="mt-8 text-xs text-white/25">©️ 2026 Bikemates India Pvt. Ltd.</p>
       </div>
     </div>
   );
 };
 
-// ── ScrollToTop (Fixed for Lenis compatibility) ──
+// ── ScrollToTop (enhanced for Lenis compatibility) ──
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { immediate: true });
+    const lenisEl = document.querySelector("[data-lenis]");
+    if (lenisEl) {
+      lenisEl.scrollTo({ top: 0, behavior: "instant" });
     } else {
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: "instant" });
     }
   }, [pathname]);
   return null;
