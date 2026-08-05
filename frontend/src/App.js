@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "@/App.css";
-
+ 
 const SITE_PASSWORD = "BM INDIA 2027";
-
+ 
 const PasswordGate = ({ children }) => {
   const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem("bm_unlocked") === "true");
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
-
+ 
   if (unlocked) return children;
-
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input === SITE_PASSWORD) {
@@ -19,24 +19,24 @@ const PasswordGate = ({ children }) => {
       setError(true);
     }
   };
-
+ 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-6">
       <div className="noise-overlay" />
       <div className="pointer-events-none absolute -top-20 left-1/2 h-[600px] w-[900px] -translate-x-1/2 radial-glow" />
-
+ 
       <div className="relative z-10 w-full max-w-sm text-center">
         <img src={process.env.PUBLIC_URL + "/logo.jpg"} alt="Bikemates" className="mx-auto h-16 w-auto rounded-xl object-contain" />
         <h1 className="mt-5 font-display text-2xl font-semibold text-white">BikeMates</h1>
-
+ 
         <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" /> Coming Soon
         </span>
-
+ 
         <p className="mx-auto mt-4 max-w-xs text-sm leading-relaxed text-white/50">
           We're putting the finishing touches on India's next mobility network. Enter the password to preview.
         </p>
-
+ 
         <form onSubmit={handleSubmit} className="mt-8">
           <input
             type="password"
@@ -50,12 +50,13 @@ const PasswordGate = ({ children }) => {
             Enter
           </button>
         </form>
-
-        <p className="mt-8 text-xs text-white/25">©️ 2026 Bikemates India Pvt. Ltd.</p>
+ 
+        <p className="mt-8 text-xs text-white/25">© 2026 Bikemates India Pvt. Ltd.</p>
       </div>
     </div>
   );
 };
+ 
 import { HashRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/auth";
@@ -63,7 +64,14 @@ import { StoreProvider } from "@/lib/store";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { AppLayout } from "@/components/app/AppLayout";
-
+ 
+// ═══════════════════════════════════════════════════════════════════════════
+// PHASE 1 — VISUAL EXPERIENCE UPGRADES
+// ═══════════════════════════════════════════════════════════════════════════
+import { LenisProvider } from "@/hooks/useLenis";
+import { ScrollProgress } from "@/components/site/ScrollProgress";
+// ═══════════════════════════════════════════════════════════════════════════
+ 
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Features from "@/pages/Features";
@@ -85,7 +93,7 @@ import PressKit from "@/pages/PressKit";
 import Legal from "@/pages/Legal";
 import NotFound from "@/pages/NotFound";
 import { Login, Signup } from "@/pages/Auth";
-
+ 
 import Dashboard from "@/pages/Dashboard";
 import RentBike from "@/pages/app/RentBike";
 import BookRide from "@/pages/app/BookRide";
@@ -110,13 +118,22 @@ import Earnings from "@/pages/app/Earnings";
 import Analytics from "@/pages/app/Analytics";
 import Reviews from "@/pages/app/Reviews";
 import Panels from "@/pages/app/Panels";
-
+ 
+// ── ScrollToTop (enhanced for Lenis compatibility) ──
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => {
+    // Use Lenis's scrollTo if available, otherwise native
+    const lenisEl = document.querySelector("[data-lenis]");
+    if (lenisEl) {
+      lenisEl.scrollTo({ top: 0, behavior: "instant" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [pathname]);
   return null;
 };
-
+ 
 const SiteLayout = () => (
   <>
     <Navbar />
@@ -126,12 +143,14 @@ const SiteLayout = () => (
     <Footer />
   </>
 );
-
+ 
 function App() {
   return (
     <PasswordGate>
+    <LenisProvider> {/* PHASE 1: Smooth scrolling wraps entire app */}
     <div className="App">
       <div className="noise-overlay" />
+      <ScrollProgress /> {/* PHASE 1: Glowing scroll progress bar */}
       <HashRouter>
         <AuthProvider>
           <StoreProvider>
@@ -161,10 +180,10 @@ function App() {
                 <Route path="/terms" element={<Legal type="terms" />} />
                 <Route path="/refund" element={<Legal type="refund" />} />
               </Route>
-
+ 
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-
+ 
               <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/app/panels" element={<Panels />} />
@@ -191,15 +210,16 @@ function App() {
                 <Route path="/app/analytics" element={<Analytics />} />
                 <Route path="/app/reviews" element={<Reviews />} />
               </Route>
-
+ 
               <Route path="*" element={<NotFound />} />
             </Routes>
           </StoreProvider>
         </AuthProvider>
      </HashRouter>
     </div>
+    </LenisProvider>
     </PasswordGate>
   );
 }
-
+ 
 export default App;
