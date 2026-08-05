@@ -76,8 +76,8 @@ const Dashboard = () => {
           <div className="flex items-center gap-4">
             <div className="flex flex-1 items-center gap-2.5">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 text-primary"><Icon name="Wallet" className="h-4 w-4" /></span>
-              <div>
-                <p className="font-display text-base font-bold text-emerald-400"><Counter value={store.wallet} prefix="₹" /></p>
+             <div>
+                <p className="font-display text-base font-bold"><Counter value={store.wallet} prefix="₹" /></p>
                 <p className="text-[10px] text-white/50">Wallet Balance</p>
               </div>
             </div>
