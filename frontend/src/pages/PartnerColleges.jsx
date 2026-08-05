@@ -7,7 +7,7 @@ const PartnerColleges = () => {
   const f = useForm({ college: "", name: "", email: "", role: "" }, "Thanks! Our partnerships team will reach out to your college.");
   return (
     <div>
-      <PageHero eyebrow="Partner Colleges" title="320+ campuses. And counting." subtitle="We work hand-in-hand with colleges to bring safe, verified mobility to their students." />
+      <PageHero eyebrow="Coming Partner Colleges" title="campuses. And counting." subtitle="We work hand-in-hand with colleges to bring safe, verified mobility to their students." />
       <section className="px-6 pb-16 lg:px-10">
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {COLLEGES.map((c, i) => (
