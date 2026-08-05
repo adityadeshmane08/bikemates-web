@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Polyline, Circle, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Polyline, Circle, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { CENTER } from "@/lib/geo";
@@ -15,7 +15,10 @@ const pinIcon = (color = "#FF4B00", pulse = false) =>
     iconSize: [22, 22],
     iconAnchor: [11, 11],
   });
-
+const ClickCatcher = ({ onClick }) => {
+  useMapEvents({ click: (e) => onClick({ lat: e.latlng.lat, lng: e.latlng.lng }) });
+  return null;
+};
 // Recenters the map smoothly when `center` changes (used for the moving GPS marker).
 const Recenter = ({ center }) => {
   const map = useMap();
@@ -34,11 +37,12 @@ export const MapView = ({
   zoom = 13,
   height = "100%",
   onMarkerClick = () => {},
+  onMapClick = null,
 }) => (
   <div className="isolate relative z-0 overflow-hidden rounded-3xl border border-white/10" style={{ height }}>
     <MapContainer center={[center.lat, center.lng]} zoom={zoom} style={{ height: "100%", width: "100%", background: "#0a0a0a" }} zoomControl={false} attributionControl={false}>
       <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
-
+{onMapClick && <ClickCatcher onClick={onMapClick} />}
       {markers.map((m) => (
         <Marker key={m.id} position={[m.lat, m.lng]} icon={pinIcon(m.color || "#FF4B00")} eventHandlers={{ click: () => onMarkerClick(m) }} />
       ))}
