@@ -115,6 +115,22 @@ const handleModulePointerUp = (e) => {
                 <p className="text-xs font-medium">Verified user ride</p>
               </div>
             </motion.div>
+
+            {/* Riding bike — loops across the hero, reinforcing motion/mobility */}
+            <motion.div
+              className="pointer-events-none absolute z-10"
+              style={{ bottom: "18%" }}
+              animate={{ left: ["-10%", "110%"] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "linear", repeatDelay: 1.5 }}
+            >
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-primary shadow-[0_0_24px_rgba(255,75,0,0.55)]"
+              >
+                <Icon name="Bike" className="h-5 w-5 text-white" />
+              </motion.div>
+            </motion.div>
           </Reveal>
         </div>
       </section>
