@@ -56,7 +56,20 @@ const handleModulePointerUp = (e) => {
     <div className="overflow-hidden">
       {/* HERO */}
       <section className="relative px-6 pt-40 pb-24 lg:px-10 lg:pt-48">
-        <div className="pointer-events-none absolute -top-20 left-1/2 h-[600px] w-[900px] -translate-x-1/2 radial-glow" />
+        <motion.div
+          className="pointer-events-none absolute -top-20 left-1/2 h-[600px] w-[900px] -translate-x-1/2 radial-glow"
+          animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.08, 1] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+        {[...Array(7)].map((_, i) => (
+          <motion.span
+            key={i}
+            className="pointer-events-none absolute h-1.5 w-1.5 rounded-full bg-primary/50"
+            style={{ left: `${8 + i * 13}%`, top: `${18 + (i % 3) * 20}%` }}
+            animate={{ y: [0, -16, 0], opacity: [0.15, 0.65, 0.15] }}
+            transition={{ duration: 4.5 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.35 }}
+          />
+        ))}
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
           <div>
             <Reveal>
@@ -64,11 +77,34 @@ const handleModulePointerUp = (e) => {
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" /> Students | Verified Users Only
               </span>
             </Reveal>
-            <Reveal delay={0.05}>
-              <h1 className="mt-6 text-5xl font-semibold leading-[0.98] tracking-tight sm:text-6xl lg:text-[4.2rem]">
-                India's Next <br /><span className="text-gradient">Mobility Network.</span>
-              </h1>
-            </Reveal>
+            <h1 className="mt-6 text-5xl font-semibold leading-[0.98] tracking-tight sm:text-6xl lg:text-[4.2rem]">
+              <span className="block overflow-hidden">
+                {["India's", "Next"].map((w, i) => (
+                  <motion.span
+                    key={w}
+                    className="inline-block"
+                    initial={{ y: "110%", opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.15 + i * 0.08 }}
+                  >
+                    {w}{i === 0 ? "\u00A0" : ""}
+                  </motion.span>
+                ))}
+              </span>
+              <span className="block overflow-hidden text-gradient">
+                {["Mobility", "Network."].map((w, i) => (
+                  <motion.span
+                    key={w}
+                    className="inline-block"
+                    initial={{ y: "110%", opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.35 + i * 0.08 }}
+                  >
+                    {w}{i === 0 ? "\u00A0" : ""}
+                  </motion.span>
+                ))}
+              </span>
+            </h1>
             <Reveal delay={0.1}>
               <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/60">
                 India’s first student & verified user only platform for bike rentals and ride sharing. Rent, share, and earn within a trusted community.
@@ -87,7 +123,14 @@ const handleModulePointerUp = (e) => {
           {/* Hero visual */}
           <Reveal delay={0.15} className="relative">
             <div className="relative overflow-hidden rounded-[2rem] border border-white/10">
-              <img src={IMAGES.hero} alt="Student riding a bike on campus" className="h-[520px] w-full object-cover" />
+              <motion.img
+                src={IMAGES.hero}
+                alt="Student riding a bike on campus"
+                className="h-[520px] w-full object-cover"
+                initial={{ scale: 1.12 }}
+                animate={{ scale: [1.12, 1.18, 1.12] }}
+                transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
             </div>
             {/* Floating cards */}
