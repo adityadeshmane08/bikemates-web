@@ -100,62 +100,28 @@ export const SectionHeading = ({ eyebrow, title, subtitle, align = "left", class
 );
 
 // Page hero used by inner pages
-export const PageHero = ({ eyebrow, title, subtitle, children }) => {
-  const words = typeof title === "string" ? title.split(" ") : null;
-  return (
-    <section className="relative overflow-hidden px-6 pt-40 pb-20 lg:px-10">
-      <motion.div
-        className="pointer-events-none absolute left-1/2 top-24 h-[420px] w-[720px] -translate-x-1/2 radial-glow"
-        animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.08, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-      {[...Array(6)].map((_, i) => (
-        <motion.span
-          key={i}
-          className="pointer-events-none absolute h-1.5 w-1.5 rounded-full bg-primary/50"
-          style={{ left: `${15 + i * 14}%`, top: `${20 + (i % 3) * 18}%` }}
-          animate={{ y: [0, -14, 0], opacity: [0.2, 0.7, 0.2] }}
-          transition={{ duration: 4 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
-        />
-      ))}
-      <div className="relative mx-auto max-w-5xl text-center">
-        {eyebrow && (
-          <motion.span
-            initial={{ opacity: 0, y: 16, skewX: -6 }}
-            animate={{ opacity: 1, y: 0, skewX: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary"
-          >
+export const PageHero = ({ eyebrow, title, subtitle, children }) => (
+  <section className="relative overflow-hidden px-6 pt-40 pb-20 lg:px-10">
+    <div className="pointer-events-none absolute left-1/2 top-24 h-[420px] w-[720px] -translate-x-1/2 radial-glow" />
+    <div className="relative mx-auto max-w-5xl text-center">
+      {eyebrow && (
+        <Reveal>
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
             {eyebrow}
-          </motion.span>
-        )}
-        <h1 className="mt-6 overflow-hidden text-4xl font-semibold leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl">
-          {words ? (
-            words.map((w, i) => (
-              <motion.span
-                key={i}
-                className="inline-block"
-                initial={{ y: "110%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.15 + i * 0.07 }}
-              >
-                {w}{i < words.length - 1 ? "\u00A0" : ""}
-              </motion.span>
-            ))
-          ) : (
-            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>{title}</motion.span>
-          )}
+          </span>
+        </Reveal>
+      )}
+      <Reveal delay={0.05}>
+        <h1 className="mt-6 text-4xl font-semibold leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl">
+          {title}
         </h1>
-        {subtitle && (
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 + (words ? words.length * 0.07 : 0), ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg"
-          >{subtitle}</motion.p>
-        )}
+      </Reveal>
+      {subtitle && (
+        <Reveal delay={0.1}>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">{subtitle}</p>
+        </Reveal>
+      )}
       {children}
       </div>
     </section>
   );
-};
