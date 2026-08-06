@@ -5,6 +5,7 @@ import { Star, Navigation, ShieldCheck, Wallet, MapPin, Zap } from "lucide-react
 import {
   Reveal, Counter, CTAButton, SectionHeading, Icon,
 } from "@/components/site/primitives";
+import HeroCinematic from "@/components/hero/HeroCinematic";
 import {
   STATS, COLLEGES, MODULES, WHY, HOW_IT_WORKS, SAFETY, BUSINESS_MODEL,
   FUTURE, TESTIMONIALS, FAQS, USER_DASHBOARD_CARDS, OWNER_DASHBOARD_CARDS, IMAGES,
@@ -77,34 +78,7 @@ const handleModulePointerUp = (e) => {
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" /> Students | Verified Users Only
               </span>
             </Reveal>
-            <h1 className="mt-6 text-5xl font-semibold leading-[0.98] tracking-tight sm:text-6xl lg:text-[4.2rem]">
-              <span className="block overflow-hidden">
-                {["India's", "Next"].map((w, i) => (
-                  <motion.span
-                    key={w}
-                    className="inline-block"
-                    initial={{ y: "110%", opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.15 + i * 0.08 }}
-                  >
-                    {w}{i === 0 ? "\u00A0" : ""}
-                  </motion.span>
-                ))}
-              </span>
-              <span className="block overflow-hidden text-gradient">
-                {["Mobility", "Network."].map((w, i) => (
-                  <motion.span
-                    key={w}
-                    className="inline-block"
-                    initial={{ y: "110%", opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.35 + i * 0.08 }}
-                  >
-                    {w}{i === 0 ? "\u00A0" : ""}
-                  </motion.span>
-                ))}
-              </span>
-            </h1>
+            <HeroCinematic className="mt-6 text-5xl font-semibold leading-[0.98] tracking-tight sm:text-6xl lg:text-[4.2rem]" />
             <Reveal delay={0.1}>
               <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/60">
                 India’s first student & verified user only platform for bike rentals and ride sharing. Rent, share, and earn within a trusted community.
