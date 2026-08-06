@@ -59,7 +59,7 @@ export const Counter = ({ value, prefix = "", suffix = "", format }) => {
 
 // Primary / secondary pill buttons that route
 export const CTAButton = ({ to, children, variant = "primary", className = "", onClick, testid, icon = true }) => {
-  const base = "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-transform duration-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black";
+  const base = "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-transform duration-300 hover:scale-[1.03] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black";
   const variants = {
     primary: "bg-primary text-white hover:shadow-[0_0_28px_rgba(255,75,0,0.45)] hover:bg-[#E64300]",
     secondary: "border border-white/20 text-white hover:bg-white/5",
