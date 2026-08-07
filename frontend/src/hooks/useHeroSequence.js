@@ -3,26 +3,25 @@ import { useEffect, useRef, useState, useCallback } from "react";
 // Desktop timing (ms) — tuned so each bike-pass + reveal reads as one
 // deliberate cinematic beat, not a slideshow.
 const DESKTOP_TIMING = {
-  ride: 1050, // time for a bike to cross the line, edge to edge
-  smokeHold: 400, // spec: "after ~0.4s the smoke begins disappearing"
-  smokeClear: 480, // spec: text waits until smoke has fully cleared
-  reveal: 800, // text blur/opacity/scale reveal duration
-  gap: 320, // pause before the next bike enters
-  sweepDelay: 420, // pause after the last word settles, before the sweep
-  sweep: 1100, // light-sweep duration across the finished heading
+  ride: 1470,
+  smokeHold: 560,
+  smokeClear: 670,
+  reveal: 1120,
+  gap: 450,
+  sweepDelay: 590,
+  sweep: 1540,
 };
 
 // Mobile timing — shorter + faster, per spec ("shorter animation, faster reveal")
 const MOBILE_TIMING = {
-  ride: 640,
-  smokeHold: 220,
-  smokeClear: 300,
-  reveal: 520,
-  gap: 180,
-  sweepDelay: 220,
-  sweep: 760,
+  ride: 900,
+  smokeHold: 310,
+  smokeClear: 420,
+  reveal: 730,
+  gap: 250,
+  sweepDelay: 310,
+  sweep: 1065,
 };
-
 function getIsMobile() {
   if (typeof window === "undefined") return false;
   return window.matchMedia("(max-width: 768px)").matches;
