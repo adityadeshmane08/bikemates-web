@@ -28,21 +28,7 @@ export default function HeroCinematic({ className = "" }) {
       {/* Always-present accessible text — the animation below is purely decorative */}
       <span className="sr-only">India's Next Mobility Network.</span>
 
-      <div className="hero-cinematic__backdrop" aria-hidden="true" />
-
-      {!isMobile && (
-        <div aria-hidden="true">
-          {[...Array(9)].map((_, i) => (
-            <span
-              key={i}
-              className="hero-cinematic__particle"
-              style={{ left: `${6 + i * 11}%`, top: `${10 + (i % 4) * 22}%`, animationDelay: `${i * 0.4}s` }}
-            />
-          ))}
-        </div>
-      )}
-
-      <div className="hero-cinematic__lines" aria-hidden="true">
+     <div className="hero-cinematic__lines" aria-hidden="true">
         {SCENES.map((scene, i) => (
           <div className="hero-cinematic__line" key={scene.text}>
             <RevealText state={getWordState(i)} durationMs={timing.reveal} className={scene.accent ? "text-gradient" : ""}>
