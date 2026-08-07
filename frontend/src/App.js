@@ -5,7 +5,6 @@ import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/auth";
 import { StoreProvider } from "@/lib/store";
 import { Navbar } from "@/components/site/Navbar";
-import { PhotoBackground } from "@/components/site/PhotoBackground";
 import { Footer } from "@/components/site/Footer";
 import { AppLayout } from "@/components/app/AppLayout";
 
@@ -120,7 +119,6 @@ const ScrollToTop = () => {
 
 const SiteLayout = () => (
   <>
-    <PhotoBackground />
     <Navbar />
     <main className="relative z-[2]">
       <Outlet />
