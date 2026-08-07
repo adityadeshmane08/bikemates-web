@@ -3,24 +3,24 @@ import { useEffect, useRef, useState, useCallback } from "react";
 // Desktop timing (ms) — tuned so each bike-pass + reveal reads as one
 // deliberate cinematic beat, not a slideshow.
 const DESKTOP_TIMING = {
-  ride: 1470,
-  smokeHold: 560,
-  smokeClear: 670,
-  reveal: 1120,
-  gap: 450,
-  sweepDelay: 590,
-  sweep: 1540,
+  ride: 630,
+  smokeHold: 240,
+  smokeClear: 288,
+  reveal: 480,
+  gap: 192,
+  sweepDelay: 252,
+  sweep: 660,
 };
 
 // Mobile timing — shorter + faster, per spec ("shorter animation, faster reveal")
 const MOBILE_TIMING = {
-  ride: 900,
-  smokeHold: 310,
-  smokeClear: 420,
-  reveal: 730,
-  gap: 250,
-  sweepDelay: 310,
-  sweep: 1065,
+  ride: 384,
+  smokeHold: 132,
+  smokeClear: 180,
+  reveal: 312,
+  gap: 108,
+  sweepDelay: 132,
+  sweep: 456,
 };
 function getIsMobile() {
   if (typeof window === "undefined") return false;
