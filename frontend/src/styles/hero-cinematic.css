@@ -10,35 +10,6 @@
   isolation: isolate;
 }
 
-/* Dark premium backdrop: near-black gradient + soft orange ambient glow */
-.hero-cinematic__backdrop {
-  position: absolute;
-  inset: -20% -8%;
-  z-index: -1;
-  pointer-events: none;
-  border-radius: 40px;
-  background:
-    radial-gradient(60% 55% at 28% 25%, rgba(255, 75, 0, 0.16), transparent 60%),
-    radial-gradient(45% 45% at 82% 70%, rgba(255, 75, 0, 0.10), transparent 65%),
-    linear-gradient(180deg, #050505 0%, #0a0a0a 55%, #050505 100%);
-}
-
-/* Tiny floating particles */
-.hero-cinematic__particle {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: rgba(255, 150, 80, 0.55);
-  box-shadow: 0 0 6px 1px rgba(255, 110, 40, 0.35);
-  will-change: transform, opacity;
-  animation: heroFloat 7s ease-in-out infinite;
-}
-@keyframes heroFloat {
-  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.15; }
-  50% { transform: translate3d(0, -18px, 0); opacity: 0.7; }
-}
-
 /* Word rows â€” each row is the "stage" a bike rides across before its word appears */
 .hero-cinematic__lines {
   display: flex;
