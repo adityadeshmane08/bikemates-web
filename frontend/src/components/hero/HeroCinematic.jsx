@@ -13,7 +13,7 @@ const SCENES = [
 ];
 
 export default function HeroCinematic({ className = "" }) {
-  const { sceneIndex, phase, isMobile, timing } = useHeroSequence(SCENES.length);
+  const { sceneIndex, phase, timing } = useHeroSequence(SCENES.length);
 
   const getWordState = (i) => {
     if (phase === "done") return "settled"; // covers natural completion AND skip
