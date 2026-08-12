@@ -37,11 +37,13 @@ const seed = {
     { id: "b20", mine: false, name: "Bajaj Chetak (Electric)", type: "Electric", owner: "Aditi Joshi", college: "Symbiosis Pune", distance: 1.3, fuel: "Electric", year: 2024, transmission: "Automatic", seats: 2, rating: 4.8, trips: 38, hourly: 50, daily: 350, weekly: 2000, deposit: 2400, image: img(1), specs: ["Range 90 km", "Retro-futuristic design", "Metal body", "Zero emissions"], available: true },
   ],
   rides: [
-    { id: "r1", mine: false, driver: "Rohan Mehta", college: "IIT Bombay", from: "Main Campus Gate", to: "Andheri Station", date: "Today", time: "5:30 PM", seats: 2, seatsTotal: 2, fuelSplit: 45, vehicle: "Honda Activa 6G", rating: 4.9, recurring: "Daily (Mon–Fri)" },
-    { id: "r2", mine: false, driver: "Ishita Verma", college: "SRM Chennai", from: "Hostel Block C", to: "Tech Park, Phase 2", date: "Today", time: "8:15 AM", seats: 1, seatsTotal: 1, fuelSplit: 35, vehicle: "TVS Jupiter", rating: 4.7, recurring: "Daily (Mon–Sat)" },
-    { id: "r3", mine: false, driver: "Karan Singh", college: "BITS Pilani", from: "Library", to: "City Center Mall", date: "Tomorrow", time: "6:00 PM", seats: 1, seatsTotal: 2, fuelSplit: 60, vehicle: "Royal Enfield Classic 350", rating: 4.8, recurring: "Weekends" },
-    { id: "r4", mine: false, driver: "Aditya Rao", college: "Manipal University", from: "North Gate", to: "Railway Junction", date: "Today", time: "7:45 AM", seats: 2, seatsTotal: 2, fuelSplit: 50, vehicle: "Bajaj Pulsar 150", rating: 4.6, recurring: "Daily" },
+    { id: "r1", mine: false, driver: "Rohan Mehta", college: "IIT Bombay", from: "Main Campus Gate", to: "Andheri Station", date: "Today", time: "5:30 PM", seats: 2, seatsTotal: 2, fuelSplit: 45, vehicle: "Honda Activa 6G", rating: 4.9, trips: 132, verified: true, recurring: "Daily (Mon–Fri)" },
+    { id: "r2", mine: false, driver: "Ishita Verma", college: "SRM Chennai", from: "Hostel Block C", to: "Tech Park, Phase 2", date: "Today", time: "8:15 AM", seats: 1, seatsTotal: 1, fuelSplit: 35, vehicle: "TVS Jupiter", rating: 4.7, trips: 64, verified: true, recurring: "Daily (Mon–Sat)" },
+    { id: "r3", mine: false, driver: "Karan Singh", college: "BITS Pilani", from: "Library", to: "City Center Mall", date: "Tomorrow", time: "6:00 PM", seats: 1, seatsTotal: 2, fuelSplit: 60, vehicle: "Royal Enfield Classic 350", rating: 4.8, trips: 88, verified: true, recurring: "Weekends" },
+    { id: "r4", mine: false, driver: "Aditya Rao", college: "Manipal University", from: "North Gate", to: "Railway Junction", date: "Today", time: "7:45 AM", seats: 2, seatsTotal: 2, fuelSplit: 50, vehicle: "Bajaj Pulsar 150", rating: 4.6, trips: 51, verified: true, recurring: "Daily" },
+    { id: "r5", mine: false, driver: "Meera Iyer", college: "NIT Trichy", from: "Girls Hostel", to: "Andheri Station", date: "Today", time: "5:45 PM", seats: 1, seatsTotal: 2, fuelSplit: 40, vehicle: "Suzuki Access 125", rating: 0, trips: 0, verified: true, recurring: "New rider" },
   ],
+  rideAlerts: [],
   bookings: [],
 };
 
@@ -99,6 +101,10 @@ export const StoreProvider = ({ children }) => {
     }));
   }, []);
 
+  const addRideAlert = useCallback((alert) => {
+    setState((s) => ({ ...s, rideAlerts: [{ ...alert, id: "ra" + Date.now(), createdAt: "Just now" }, ...(s.rideAlerts || [])] }));
+  }, []);
+
   const topUp = useCallback((amount) => {
     setState((s) => ({ ...s, wallet: s.wallet + amount, transactions: [{ id: "t" + Date.now(), label: "Wallet top-up", amount, date: "Just now", type: "credit" }, ...s.transactions] }));
   }, []);
@@ -109,7 +115,7 @@ export const StoreProvider = ({ children }) => {
 
   const reset = useCallback(() => { localStorage.removeItem(KEY); setState(seed); }, []);
 
- const value = { ...state, addBike, deleteBike, toggleBikeAvailability, setGeofence, addRide, bookBike, bookRide, topUp, withdraw, reset,
+ const value = { ...state, addBike, deleteBike, toggleBikeAvailability, setGeofence, addRide, bookBike, bookRide, addRideAlert, topUp, withdraw, reset,
     myBikes: state.bikes.filter((b) => b.mine), myRides: state.rides.filter((r) => r.mine) };
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
